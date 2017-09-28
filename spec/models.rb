@@ -5,19 +5,21 @@ describe Instructor do
     @instructor = Instructor.create(name: "test", email: "test@test.edu", password: "1234")
   end
 
-  it 'an new instructor is instantiated with a name' do
+  it 'is instantiated with a name' do
     expect(@instructor.name).to eq("test")
   end
 
-  it 'an new instructor is instantiated with a email' do
+  it 'is instantiated with a email' do
     expect(@instructor.email).to eq("test@test.edu")
   end
 
-  it 'an new instructor is instantiated with a password' do
+  it 'is instantiated with a password' do
     expect(@instructor.password).to eq("1234")
   end
-  #initialize w/ name, email, password
-  #slugifiable
-  #has secure password
 
+  it 'has a secure password' do
+    expect(@instructor.authenticate("test")).to eq(false)
+    expect(@instructor.authenticate("1234")).to eq(@instructor)
+  end
+  # slugifiable?
 end
