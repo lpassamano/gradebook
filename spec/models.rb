@@ -1,3 +1,5 @@
+require 'spec_helper'
+
 describe Instructor do
   before do
     @instructor = Instructor.new(name: "test", email: "test@test.edu", password: "1234")
