@@ -12,6 +12,7 @@ gem 'pry'
 gem 'sinatra-activerecord', :require => 'sinatra/activerecord'
 gem 'require_all'
 gem 'shotgun'
+gem 'bcrypt'
 
 group :test do
   gem 'rspec'
