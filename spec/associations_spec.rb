@@ -46,15 +46,6 @@ describe 'Instructor Associations' do
 
     expect(Instructor.find_by(name: "Charles").courses.count).to eq(2)
   end
-
-  it 'has many students' do
-    sam = Student.create(name: "Sam", email: "s@test.edu", password: "1234")
-    bob = Student.create(name: "Bob", email: "b@test.edu", password: "abcd")
-    @instructor.students << [sam, bob]
-    @instructor.save
-
-    expect(Instructor.find_by(name: "Charles").students.include?(sam)).to eq(true)
-  end
 end
 
 describe "Student Associations" do
@@ -71,12 +62,12 @@ describe "Student Associations" do
     expect(Student.find_by(name: "Leigh").courses.include?(art)).to eq(true)
   end
 
-  it 'has many assessments' do
-    exam = Assessment.create(name: "Final Exam")
-    project = Assessment.create(name: "Group Project")
+  it 'has many grades' do
+    exam = Grade.create(score: "95")
+    project = Grade.create(score: "50")
     @student.assessments << [exam, project]
 
-    expect(Student.find_by(name: "Leigh").assessments.count).to eq(2)
+    expect(Student.find_by(name: "Leigh").grades.count).to eq(2)
   end
 end
 
@@ -93,11 +84,33 @@ describe 'Assessment Associations' do
     expect(Assessment.find_by(name: "Book Report").course).to eq(physics)
   end
 
-  it 'belongs to a student' do
-    julia = Student.create(name: "Julia", email: "j@test.edu", password: "asdf")
-    @assessment.student = julia
+  it 'has many grades' do
+    x = Grade.create
+    y = Grade.create
+    z = Grade.create
+    @assessment.grades << [x, y, z]
     @assessment.save
 
-    expect(Assessment.find_by(name: "Book Report").student).to eq(julia)
+    expect(Assessment.find_by(name: "Book Report").grades.count).to eq(3)
+  end
+end
+
+describe "Grade Associations" do
+  before do
+    @grade = Grade.create(score: "100")
+  end
+
+  it 'belongs to a student' do
+    leigh = Student.create(name: "Leigh", password: "1234")
+    @grade.student = leigh
+
+    expect(Grade.find_by(score: "100").student).to eq(leigh)
+  end
+
+  it 'belongs to an assessment' do
+    exam = Assessment.create
+    @grade.assessment = exam
+
+    expect(Grade.find_by(score: "100").assessment).to eq(exam)
   end
 end
