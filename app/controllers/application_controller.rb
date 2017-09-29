@@ -8,7 +8,16 @@ class ApplicationController < Sinatra::Base
   end
 
   get '/' do
-    erb :index 
+    erb :index
   end
 
+  helpers do
+    def logged_in?
+      !!session[:user_id]
+    end
+
+    def current_user
+      Student.find(session[:user_id]) || Instructor.find(session[:user_id])
+    end
+  end
 end

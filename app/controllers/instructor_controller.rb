@@ -20,6 +20,13 @@ class InstructorController < ApplicationController
   end
 
   post '/instructor/login' do
-    redirect "/instructor/courses"
+    instructor = Instructor.find_by(email: params[:email])
+    if instructor && instructor.authenticate(params[:password])
+      session[:user_id] = user.id
+      redirect "/instructor/courses"
+    else
+      #add flash error message later
+      redirect "/instructor/login"
+    end
   end
 end
