@@ -35,4 +35,8 @@ describe Course do
     expect(@course.name).to eq("Test Class")
   end
 
+  it 'belongs to an instructor' do
+    # some code here 
+  end
+
 end
