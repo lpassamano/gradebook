@@ -45,7 +45,8 @@ describe ApplicationController do
       user = Instructor.create(name: "Charles", email: "c@college.edu", password: "1234")
       params = {email: "c@college.edu", password: "1234"}
       post '/instructor/login', params
-      expect(last_response.location).to include("/instructor/courses")
+      expect(last_response.status).to eq(200)
+      expect(last_response.body).to include("Your Courses")
     end
 
     it 'does not allow you to login with an incorrect password' do
@@ -69,6 +70,16 @@ describe ApplicationController do
       session[:user_id] = user.id
       get '/login'
       expect(last_response.location).to include("/instructor/courses")
+    end
+  end
+
+  describe "User Logout" do
+    it 'lets an instructor log out if they are logged in'  do
+      user = Instructor.create(name: "Leigh", email: "leigh@leigh.com", password: "1234")
+      params = {email: "leigh@leigh.com", password: "1234"}
+      post '/instructor/login', params
+      get '/logout'
+      expect(last_response.location).to include("/")
     end
   end
 

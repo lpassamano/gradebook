@@ -16,6 +16,7 @@ class InstructorController < ApplicationController
   end
 
   get '/instructor/login' do
+    redirect "/instructor/courses" if logged_in?
     erb :"instructor/login"
   end
 
@@ -28,5 +29,9 @@ class InstructorController < ApplicationController
       #add flash error message later
       redirect "/instructor/login"
     end
+  end
+
+  get '/instructor/courses' do
+    erb "courses/index"
   end
 end
