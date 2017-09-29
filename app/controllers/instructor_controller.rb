@@ -14,4 +14,8 @@ class InstructorController < ApplicationController
       redirect "/instructor/signup"
     end
   end
+
+  get '/instructor/login' do
+    erb :"instructor/login"
+  end
 end
