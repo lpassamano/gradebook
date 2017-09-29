@@ -21,8 +21,17 @@ describe Instructor do
     expect(@instructor.authenticate("test")).to eq(false)
     expect(@instructor.authenticate("1234")).to eq(@instructor)
   end
+
+  it 'has many courses' do
+    x = Course.create(name: "Test Class")
+    y = Course.create(name: "Sample Class")
+
+    x.instructor_id = @instructor.id
+    y.instructor_id = @instructor.id
+
+    expect(@instructor.courses.count).to eq(2)
+  end
   # slugifiable?
-  # has many courses
   # has may students through courses
 end
 
@@ -78,6 +87,6 @@ describe Assessment do
   end
 
   it 'belongs to a student' do
-    #some code 
+    #some code
   end
 end
