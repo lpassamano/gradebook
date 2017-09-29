@@ -41,10 +41,10 @@ describe 'Instructor Associations' do
   it 'has many courses' do
     math = Course.create(name: "Math")
     chem = Course.create(name: "Chemistry")
-    @instructor << [math, chem]
-    @instructor.save 
+    @instructor.courses << [math, chem]
+    @instructor.save
 
-    expect(Course.find_by(name: "Charles").courses.count).to eq(2)
+    expect(Instructor.find_by(name: "Charles").courses.count).to eq(2)
   end
 
   it 'has many students' do
