@@ -56,3 +56,22 @@ describe 'Instructor Associations' do
     expect(Instructor.find_by(name: "Charles").students.include?(sam)).to eq(true)
   end
 end
+
+describe "Student Associations" do
+  before do
+    @student = Student.create(name: "Leigh", email: "l@test.edu", password: "1234")
+  end
+
+  it 'has many courses' do
+    art = Course.create(name: "Art")
+    music = Course.create(name: "Music")
+    @student.courses << [art, music]
+    @student.save
+
+    expect(Student.find_by(name: "Leigh").courses.include?(art)).to eq(true)
+  end
+
+  it 'has many assessments' do
+
+  end
+end
