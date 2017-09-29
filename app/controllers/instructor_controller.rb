@@ -2,7 +2,7 @@ class InstructorController < ApplicationController
 
   get '/instructor/signup' do
     if logged_in?
-      redirect "/instructor/courses"
+      redirect "/courses"
     else
       erb :"instructor/signup"
     end
@@ -12,7 +12,7 @@ class InstructorController < ApplicationController
     instructor = Instructor.new(params)
     if instructor.save && params[:name] != "" && params[:email] != ""
       session[:user_id] = instructor.id
-      redirect "/instructor/courses"
+      redirect "/courses"
     else
       #add flash error message later
       redirect "/instructor/signup"
@@ -31,14 +31,14 @@ class InstructorController < ApplicationController
     instructor = Instructor.find_by(email: params[:email])
     if instructor && instructor.authenticate(params[:password])
       session[:user_id] = instructor.id
-      redirect "/instructor/courses"
+      redirect "/courses"
     else
       #add flash error message later
       redirect "/instructor/login"
     end
   end
 
-  get '/instructor/courses' do
+  get '/courses' do
     erb :"courses/index"
   end
 end
