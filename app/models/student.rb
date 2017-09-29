@@ -3,7 +3,5 @@ class Student < ActiveRecord::Base
 
   has_many :course_students
   has_many :courses, through: :course_students
-  has_many :instructor_students
-  has_many :instructors, through: :instructor_students
-  has_many :assessments
+  has_many :grades 
 end

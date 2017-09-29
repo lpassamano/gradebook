@@ -65,7 +65,7 @@ describe "Student Associations" do
   it 'has many grades' do
     exam = Grade.create(score: "95")
     project = Grade.create(score: "50")
-    @student.assessments << [exam, project]
+    @student.grades << [exam, project]
 
     expect(Student.find_by(name: "Leigh").grades.count).to eq(2)
   end
@@ -103,6 +103,7 @@ describe "Grade Associations" do
   it 'belongs to a student' do
     leigh = Student.create(name: "Leigh", password: "1234")
     @grade.student = leigh
+    @grade.save
 
     expect(Grade.find_by(score: "100").student).to eq(leigh)
   end
@@ -110,6 +111,7 @@ describe "Grade Associations" do
   it 'belongs to an assessment' do
     exam = Assessment.create
     @grade.assessment = exam
+    @grade.save 
 
     expect(Grade.find_by(score: "100").assessment).to eq(exam)
   end
