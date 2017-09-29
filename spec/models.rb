@@ -22,8 +22,6 @@ describe Instructor do
     expect(@instructor.authenticate("1234")).to eq(@instructor)
   end
   # slugifiable?
-  # has may students through courses
-  #has many courses
 end
 
 describe Course do
