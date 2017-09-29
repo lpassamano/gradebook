@@ -7,21 +7,31 @@ describe ApplicationController do
       expect(last_response.status).to eq(200)
       expect(last_response.body).to include("Welcome!")
     end
+
+    it 'has option to login or signup as an instructor or student' do
+      get '/'
+      expect(last_response.body).to include("Student")
+      expect(last_response.body).to include("Instructor")
+    end
   end
 
-  describe "Signup" do
+  describe "Instructor Signup" do
     it 'loads the signup page' do
-      get '/signup' do
+      get '/instructor/signup' do
         expect(last_response.status).to eq(200)
       end
     end
 
     it 'does not let a user sign up without a name, email, and password' do
-      #check params for name, email, password 
+      params = {name: "", email: "test@test.edu", password: "1234"}
+      post '/instructor/signup', params
+      expect(last_response.location).to include('/instructor/signup')
     end
 
-    it 'requires that you use your school/university email to signup' do
-      #use regex to make sure email ends with .edu
+    it 'redirects you to courses index' do
+      params = {name: "Doc Brown", email: "doc@test.edu", password: "1234"}
+      post '/instructor/signup', params
+      expect(last_response.location).to include("/instructor/courses")
     end
   end
 
