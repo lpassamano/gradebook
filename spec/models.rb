@@ -21,18 +21,9 @@ describe Instructor do
     expect(@instructor.authenticate("test")).to eq(false)
     expect(@instructor.authenticate("1234")).to eq(@instructor)
   end
-
-  it 'has many courses' do
-    x = Course.create(name: "Test Class")
-    y = Course.create(name: "Sample Class")
-
-    x.instructor_id = @instructor.id
-    y.instructor_id = @instructor.id
-
-    expect(@instructor.courses.count).to eq(2)
-  end
   # slugifiable?
   # has may students through courses
+  #has many courses
 end
 
 describe Course do
@@ -43,11 +34,6 @@ describe Course do
   it 'is instantiated with a name' do
     expect(@course.name).to eq("Test Class")
   end
-
-  it 'belongs to an instructor' do
-    # some code here
-  end
-  #has many students
   #slugifiable
 end
 

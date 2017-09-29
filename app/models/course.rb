@@ -1,2 +1,3 @@
 class Course < ActiveRecord::Base
-end 
+  belongs_to :instructor 
+end
