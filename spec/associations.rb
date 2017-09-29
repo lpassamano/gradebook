@@ -79,3 +79,23 @@ describe "Student Associations" do
     expect(Student.find_by(name: "Leigh").assessments.count).to eq(2)
   end
 end
+
+describe 'Assessment Associations' do
+  before do
+    @assessment = Assessment.create(name: "Book Report")
+  end
+
+  it 'belongs to an instructor' do
+    leigh = Instructor.create(name: "Leigh", password: "1234")
+    @assessment.instructor = leigh
+
+    expect(Assessment.find_by(name: "Book Report").instructor).to eq(leigh)
+  end
+
+  it 'belongs to a student' do
+    julia = Student.create(name: "Julia", password: "asdf")
+    @assessment.student = julia
+
+    expect(Assessment.find_by(name: "Book Report").student).to eq(julia)
+  end
+end

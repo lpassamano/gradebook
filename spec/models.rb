@@ -51,8 +51,6 @@ describe Student do
     expect(@student.authenticate("asdf")).to eq(@student)
   end
   #slugifiable
-  #has many courses
-  #has many assessments
 end
 
 describe Assessment do
@@ -64,13 +62,5 @@ describe Assessment do
     expect(@assessment.name).to eq("Final Exam")
     expect(@assessment.grade).to eq("95")
     expect(@assessment.comment).to eq("great job!")
-  end
-
-  it 'belongs to an instructor' do
-    #some code
-  end
-
-  it 'belongs to a student' do
-    #some code
   end
 end
