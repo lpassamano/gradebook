@@ -14,7 +14,12 @@ describe 'Course Associations' do
   end
 
   it 'has many students' do
+    leigh = Student.create(name: "Leigh", email: "leigh@test.edu", password: "5678")
+    becky = Student.create(name: "Becky", email: "becky@test.edu", password: "asdf")
+    @course.students << [leigh, becky]
+    @course.save
 
+    expect(Course.find_by(name: "Test Course").students.count).to eq(2)
   end
 
   it 'has many assessments' do
