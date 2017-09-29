@@ -5,6 +5,13 @@ class InstructorController < ApplicationController
   end
 
   post '/instructor/signup' do
-    
+    instructor = Instructor.new(params)
+    if instructor.save && params[:name] != "" && params[:email] != ""
+      session[:user_id] = instructor.id
+      redirect "/instructor/courses"
+    else
+      #add flash error message later
+      redirect "/instructor/signup"
+    end
   end
 end
