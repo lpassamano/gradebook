@@ -48,6 +48,11 @@ describe 'Instructor Associations' do
   end
 
   it 'has many students' do
+    sam = Student.create(name: "Sam", email: "s@test.edu", password: "1234")
+    bob = Student.create(name: "Bob", email: "b@test.edu", password: "abcd")
+    @instructor.students << [sam, bob]
+    @instructor.save
 
+    expect(Instructor.find_by(name: "Charles").students.include?(sam)).to eq(true)
   end
 end
