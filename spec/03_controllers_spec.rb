@@ -35,4 +35,26 @@ describe ApplicationController do
     end
   end
 
+  describe "Instructor Login" do
+    it 'loads the login page' do
+      get '/instructor/login'
+      expect(last_response.status).to eq(200)
+    end
+
+    it 'redirects to course index after login' do
+      user = Instructor.create(name: "Charles", email: "c@college.edu", password: "1234")
+      params = {email: "c@college.edu", password: "1234"}
+      post '/instructor/login', params
+      expect(last_response.location).to include("/instructor/courses")
+    end
+
+    it 'does not allow you to login with an incorrect password' do
+
+    end
+
+    it 'does not allow you to login with an unregistered email' do
+
+    end
+  end
+
 end
