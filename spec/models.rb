@@ -72,4 +72,12 @@ describe Assessment do
     expect(@assessment.grade).to eq("95")
     expect(@assessment.comment).to eq("great job!")
   end
+
+  it 'belongs to an instructor' do
+    #some code
+  end
+
+  it 'belongs to a student' do
+    #some code 
+  end
 end
