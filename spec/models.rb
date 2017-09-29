@@ -22,4 +22,17 @@ describe Instructor do
     expect(@instructor.authenticate("1234")).to eq(@instructor)
   end
   # slugifiable?
+  # has many courses
+  # has may students through courses
+end
+
+describe Course do
+  before do
+    @course = Course.create(name: "Test Class")
+  end
+
+  it 'is instantiated with a name' do
+    expect(@course.name).to eq("Test Class")
+  end
+
 end
