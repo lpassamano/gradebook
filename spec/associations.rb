@@ -85,16 +85,18 @@ describe 'Assessment Associations' do
     @assessment = Assessment.create(name: "Book Report")
   end
 
-  it 'belongs to an instructor' do
-    leigh = Instructor.create(name: "Leigh", password: "1234")
-    @assessment.instructor = leigh
+  it 'belongs to an course' do
+    physics = Course.create(name: "Physics")
+    @assessment.course = physics
+    @assessment.save
 
-    expect(Assessment.find_by(name: "Book Report").instructor).to eq(leigh)
+    expect(Assessment.find_by(name: "Book Report").course).to eq(physics)
   end
 
   it 'belongs to a student' do
-    julia = Student.create(name: "Julia", password: "asdf")
+    julia = Student.create(name: "Julia", email: "j@test.edu", password: "asdf")
     @assessment.student = julia
+    @assessment.save
 
     expect(Assessment.find_by(name: "Book Report").student).to eq(julia)
   end
