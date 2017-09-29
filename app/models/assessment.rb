@@ -1,2 +1,3 @@
 class Assessment < ActiveRecord::Base
-end 
+  belongs_to :course
+end
