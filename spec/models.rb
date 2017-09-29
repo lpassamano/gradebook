@@ -55,6 +55,9 @@ describe Student do
 
   it 'has a secure password' do
     expect(@student.authenticate("test")).to eq(false)
-    excpect(@student.authenticate("asdf")).to eq(@student)
+    expect(@student.authenticate("asdf")).to eq(@student)
   end
+  #slugifiable
+  #has many courses
+  #has many assessments
 end
