@@ -36,7 +36,25 @@ describe Course do
   end
 
   it 'belongs to an instructor' do
-    # some code here 
+    # some code here
+  end
+  #has many students
+  #slugifiable
+end
+
+describe Student do
+  before do
+    @student = Student.create(name: "Test Testerson", email: "student@test.edu", password: "asdf")
   end
 
+  it 'is instantiated with a name, email, and password' do
+    expect(@student.name).to eq("Test Testerson")
+    expect(@student.email).to eq("student@test.edu")
+    expect(@student.password).to eq("asdf")
+  end
+
+  it 'has a secure password' do
+    expect(@student.authenticate("test")).to eq(false)
+    excpect(@student.authenticate("asdf")).to eq(@student)
+  end
 end
