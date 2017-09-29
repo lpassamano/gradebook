@@ -23,7 +23,13 @@ describe 'Course Associations' do
   end
 
   it 'has many assessments' do
+    report = Assessment.create(name: "Report")
+    essay = Assessment.create(name: "Essay")
+    exam = Assessment.create(name: "Final Exam")
+    @course.assessments << [report, essay, exam]
+    @course.save
 
+    expect(Course.find_by(name: "Test Course").assessments.include?(exam)).to eq(true)
   end
 end
 
