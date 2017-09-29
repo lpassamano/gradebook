@@ -1,7 +1,11 @@
 class InstructorController < ApplicationController
 
   get '/instructor/signup' do
-    erb :"instructor/signup"
+    if logged_in?
+      redirect "/instructor/courses"
+    else
+      erb :"instructor/signup"
+    end
   end
 
   post '/instructor/signup' do
@@ -16,8 +20,11 @@ class InstructorController < ApplicationController
   end
 
   get '/instructor/login' do
-    redirect "/instructor/courses" if logged_in?
-    erb :"instructor/login"
+    if logged_in?
+      redirect "/instructor/courses"
+    else
+      erb :"instructor/login"
+    end
   end
 
   post '/instructor/login' do
@@ -32,6 +39,6 @@ class InstructorController < ApplicationController
   end
 
   get '/instructor/courses' do
-    erb "courses/index"
+    erb :"courses/index"
   end
 end

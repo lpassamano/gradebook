@@ -33,16 +33,6 @@ describe ApplicationController do
       post '/instructor/signup', params
       expect(last_response.location).to include("/instructor/courses")
     end
-
-    it 'does not let a logged in user view the signup page' do
-      user = Instructor.create(name: "Charles", email: "c@college.edu", password: "1234")
-      params = {email: "c@college.edu", password: "test"}
-      get '/instructor/login', params
-      session = {}
-      session[:user_id] = user.id
-      get 'instructor/signup'
-      expect(last_response.location).to include("/instructor/courses")
-    end
   end
 
   describe "Instructor Login" do
@@ -61,24 +51,14 @@ describe ApplicationController do
     it 'does not allow you to login with an incorrect password' do
       user = Instructor.create(name: "Charles", email: "c@college.edu", password: "1234")
       params = {email: "c@college.edu", password: "test"}
-      get '/instructor/login', params
+      post '/instructor/login', params
       expect(last_response.location).to include("/instructor/login")
     end
 
     it 'does not allow you to login with an unregistered email' do
       params = {email: "test@college.edu", password: "test"}
-      get '/instructor/login', params
+      post '/instructor/login', params
       expect(last_response.location).to include("/instructor/login")
-    end
-
-    it 'does not let a logged in user view the login page' do
-      user = Instructor.create(name: "Charles", email: "c@college.edu", password: "1234")
-      params = {email: "c@college.edu", password: "test"}
-      get '/instructor/login', params
-      session = {}
-      session[:user_id] = user.id
-      get '/instructor/login'
-      expect(last_response.location).to include("/instructor/courses")
     end
   end
 
