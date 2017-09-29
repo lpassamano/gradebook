@@ -64,3 +64,14 @@ describe Assessment do
     expect(@assessment.comment).to eq("great job!")
   end
 end
+
+describe Grade do
+  before do
+    @grade = Grade.create(score: "100", comment: "great job!")
+  end
+
+  it 'is instantiated with a name and comment' do
+    expect(@grade.score).to eq("100")
+    expect(@grade.comment).to eq("great job!")
+  end
+end
