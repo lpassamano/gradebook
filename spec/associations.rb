@@ -72,6 +72,10 @@ describe "Student Associations" do
   end
 
   it 'has many assessments' do
+    exam = Assessment.create(name: "Final Exam")
+    project = Assessment.create(name: "Group Project")
+    @student.assessments << [exam, project]
 
+    expect(Student.find_by(name: "Leigh").assessments.count).to eq(2)
   end
 end
