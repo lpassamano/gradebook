@@ -18,4 +18,8 @@ class InstructorController < ApplicationController
   get '/instructor/login' do
     erb :"instructor/login"
   end
+
+  post '/instructor/login' do
+    redirect "/instructor/courses"
+  end
 end
