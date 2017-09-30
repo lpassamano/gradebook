@@ -90,7 +90,7 @@ describe ApplicationController do
 
     it "has a link to each course's show page" do
       get '/courses'
-      expect(last_response.body).to include("<a href=/courses")
+      expect(last_response.body).to include("<a href=\"/courses")
     end
   end
 end
