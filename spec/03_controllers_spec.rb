@@ -73,17 +73,24 @@ describe ApplicationController do
   end
 
   describe "Courses Index" do
-    it 'shows all courses associated with the current user' do
-      user = Instructor.create(name: "Leigh", email: "leigh@leigh.com", password: "1234")
+    before do
+      @user = Instructor.create(name: "Leigh", email: "leigh@leigh.com", password: "1234")
       course1 = Course.create(name: "Physics 115")
       course2 = Course.create(name: "Art History 101")
-      user.courses. << [course1, course2]
-      user.save
+      @user.courses. << [course1, course2]
+      @user.save
       params = {email: "leigh@leigh.com", password: "1234"}
       post '/instructor/login', params
+    end
+    it 'shows all courses associated with the current user' do
       get '/courses'
       expect(last_response.body).to include("Physics 115")
       expect(last_response.body).to include("Art History 101")
+    end
+
+    it "has a link to each course's show page" do
+      get '/courses'
+      expect(last_response.body).to include("<a href=/courses/")
     end
   end
 end
