@@ -74,7 +74,16 @@ describe ApplicationController do
 
   describe "Courses Index" do
     it 'shows all courses associated with the current user' do
+      user = Instructor.create(name: "Leigh", email: "leigh@leigh.com", password: "1234")
+      course1 = Course.create(name: "Physics 115")
+      course2 = Course.create(name: "Art History 101")
+      user.courses. << [course1, course2]
+      user.save
+      params = {email: "leigh@leigh.com", password: "1234"}
+      post '/instructor/login', params
       get '/courses'
+      expect(last_response.body).to include("Physics 115")
+      expect(last_response.body).to include("Art History 101")
     end
   end
 end
