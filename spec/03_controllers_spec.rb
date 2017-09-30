@@ -110,5 +110,39 @@ describe ApplicationController do
       expect(last_response.body).to include("course[name]")
       expect(last_response.body).to include("15")
     end
+
+    it 'redirects to the show page for the new course after the form is submitted' do
+      course = Course.create(name: "Philosophy 101")
+      params = {name: "Philosophy 101"}
+      post '/courses', params
+      expect(last_response.body).to include("Philosophy 101")
+    end
+
+    it 'creates a new instance of student for each student entered into the roster' do
+      params = {
+        :course => {
+          :name => "Beginner Painting",
+          :students => [
+            {
+              :name => "Juila",
+              :email => "julia@email.com"
+            },
+            {
+              :name => "Gil",
+              :email => "gil@email.com"
+            },
+            {
+              :name => "Serge",
+              :email => "serge@email.com"
+            }
+          ]
+        }
+      }
+      post '/courses', params
+      expect(last_response.body).to include("Beginner Painting")
+      expect(last_response.body).to include("Julia")
+      expect(last_response.body).to include("Gil")
+      expect(last_response.body).to include("Serge")
+    end
   end
 end
