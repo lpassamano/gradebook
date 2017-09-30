@@ -27,6 +27,10 @@ class CoursesController < ApplicationController
 
   get '/courses/:slug' do
     @course = Course.find_by_slug(params[:slug])
+    @course.assessments.sort_by {|assessment| assessment[:id]}
+    @course.students.each do |student|
+      student.grades.sort_by {|grade| grade[:assessment_id]}
+    end
     erb :"courses/show"
   end
 end

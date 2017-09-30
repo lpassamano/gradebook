@@ -19,6 +19,11 @@
       <td>
         <%= student.name %>
       </td>
+      <% student.grades.each do |grade| %>
+        <td>
+          <%= grade.score %>
+        </td>
+      <% end %>
     </tr>
     <% end %>
   </tbody>

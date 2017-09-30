@@ -165,32 +165,39 @@ describe ApplicationController do
   describe "Course Show Page" do
     before do
       @course = Course.create(name: "Photography")
-      leigh = Student.create(name: "Leigh", email: "leigh@test.edu", password: "Leigh")
       becky = Student.create(name: "Becky", email: "becky@test.edu", password: "Becky")
       chaz = Student.create(name: "Chaz", email: "chaz@test.edu", password: "Chaz")
       report = Assessment.create(name: "Report")
       essay = Assessment.create(name: "Essay")
       exam = Assessment.create(name: "Final Exam")
-      leigh.build_grade = (course_id: report.id, score: "95")
-      leigh.build_grade = (course_id: essay.id, score: "68")
-      leigh.build_grade = (course_id: exam.id, score: "100")
-      becky.build_grade = (course_id: report.id, score: "75")
-      becky.build_grade = (course_id: essay.id, score: "80")
-      becky.build_grade = (course_id: exam.id, score: "50")
-      chaz.build_grade = (course_id: report.id, score: "79")
-      chaz.build_grade = (course_id: essay.id, score: "55")
-      chaz.build_grade = (course_id: exam.id, score: "105")
-      @course.students << [leigh, becky, chaz]
+      @course.students << [becky, chaz]
       @course.assessments << [report, essay, exam]
       @course.save
+      becky_report = Grade.create(score: "75")
+      becky_essay = Grade.create(score: "80")
+      becky_exam = Grade.create(score: "50")
+      chaz_report = Grade.create(score: "79")
+      chaz_essay = Grade.create(score: "55")
+      chaz_exam = Grade.create(score: "105")
+      report.grades << [becky_report, chaz_report]
+      report.save
+      essay.grades << [becky_essay, chaz_essay]
+      essay.save
+      exam.grades << [becky_exam, chaz_exam]
+      exam.save
+      becky.grades << [becky_exam, becky_report, becky_essay]
+      becky.save
+      chaz.grades << [chaz_exam, chaz_report, chaz_essay]
+      chaz.save
     end
 
     it 'displays the course name, student roster, assigments, and student grades' do
+      #binding.pry
       get "/courses/#{@course.slug}"
       expect(last_response.body).to include("Photography")
       expect(last_response.body).to include("Becky")
       expect(last_response.body).to include("Essay")
-      expect(last_response.body).to include("<table>")
+      expect(last_response.body).to include("80")
     end
   end
 end
