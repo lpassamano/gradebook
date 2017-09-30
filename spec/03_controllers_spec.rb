@@ -171,12 +171,21 @@ describe ApplicationController do
       report = Assessment.create(name: "Report")
       essay = Assessment.create(name: "Essay")
       exam = Assessment.create(name: "Final Exam")
+      leigh.build_grade = (course_id: report.id, score: "95")
+      leigh.build_grade = (course_id: essay.id, score: "68")
+      leigh.build_grade = (course_id: exam.id, score: "100")
+      becky.build_grade = (course_id: report.id, score: "75")
+      becky.build_grade = (course_id: essay.id, score: "80")
+      becky.build_grade = (course_id: exam.id, score: "50")
+      chaz.build_grade = (course_id: report.id, score: "79")
+      chaz.build_grade = (course_id: essay.id, score: "55")
+      chaz.build_grade = (course_id: exam.id, score: "105")
       @course.students << [leigh, becky, chaz]
       @course.assessments << [report, essay, exam]
       @course.save
     end
 
-    it 'displays the course name, student roster, and assigments' do
+    it 'displays the course name, student roster, assigments, and student grades' do
       get "/courses/#{@course.slug}"
       expect(last_response.body).to include("Photography")
       expect(last_response.body).to include("Becky")

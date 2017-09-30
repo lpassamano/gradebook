@@ -1,10 +1,25 @@
 <h3><%= @course.name %></h3>
 
-<h4>Class Roster</h4>
-<ol>
-  <% @course.students.each do |student| %>
-    <li>
-      <%= student.name %>
-    </li>
-  <% end %>
-</ol>
+<table>
+  <thead>
+    <tr>
+      <td>
+        Students
+      </td>
+      <% @course.assessments.each do |assessment| %>
+      <td>
+        <%= assessment.name %>
+      </td>
+      <% end %>
+    </tr>
+  </thead>
+  <tbody>
+    <% @course.students.each do |student| %>
+    <tr>
+      <td>
+        <%= student.name %>
+      </td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
