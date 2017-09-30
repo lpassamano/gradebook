@@ -1,11 +1,13 @@
 class CoursesController < ApplicationController
 
   get '/courses' do
+    redirect '/' if !logged_in?
     @user = current_user
     erb :"courses/index"
   end
 
   get '/courses/new' do
+    redirect '/' if !logged_in?
     erb :"courses/new"
   end
 
@@ -19,7 +21,7 @@ class CoursesController < ApplicationController
       end
     end
     course.students << students
-    course.save 
+    course.save
     redirect "/courses/#{course.slug}"
   end
 end
