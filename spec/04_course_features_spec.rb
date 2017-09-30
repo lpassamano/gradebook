@@ -154,4 +154,54 @@ describe "Course Features" do
       expect(last_response.body).to include("<a href=\"/courses/#{@course.slug}/#{@course.assessments.first.slug}\"")
     end
   end
+
+  describe "Edit Course Form" do
+    before do
+      user = Instructor.create(name: "Leigh", email: "leigh@leigh.com", password: "1234")
+      params = {email: "leigh@leigh.com", password: "1234"}
+      post '/instructor/login', params
+
+      @course = Course.create(name: "Photography")
+      becky = Student.create(name: "Becky", email: "becky@test.edu", password: "Becky")
+      chaz = Student.create(name: "Chaz", email: "chaz@test.edu", password: "Chaz")
+      report = Assessment.create(name: "Report")
+      essay = Assessment.create(name: "Essay")
+      exam = Assessment.create(name: "Final Exam")
+      @course.students << [becky, chaz]
+      @course.assessments << [report, essay, exam]
+      @course.save
+      becky_report = Grade.create(score: "75")
+      becky_essay = Grade.create(score: "80")
+      becky_exam = Grade.create(score: "50")
+      chaz_report = Grade.create(score: "79")
+      chaz_essay = Grade.create(score: "55")
+      chaz_exam = Grade.create(score: "105")
+      report.grades << [becky_report, chaz_report]
+      report.save
+      essay.grades << [becky_essay, chaz_essay]
+      essay.save
+      exam.grades << [becky_exam, chaz_exam]
+      exam.save
+      becky.grades << [becky_exam, becky_report, becky_essay]
+      becky.save
+      chaz.grades << [chaz_exam, chaz_report, chaz_essay]
+      chaz.save
+    end
+
+    it 'allows user to change name of course' do
+
+    end
+
+    it 'allows user to add and remove students' do
+
+    end
+
+    it 'allows user to add and remove assessments' do
+
+    end
+
+    it 'allows user to delete the course' do
+
+    end
+  end
 end
