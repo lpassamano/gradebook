@@ -221,7 +221,8 @@ describe ApplicationController do
     end
 
     it 'has a link for each existing assessment to individual assessment show page' do
-
+      get "/courses/#{@course.slug}"
+      expect(last_response.body).to include("<a href=\"/courses/#{@course.slug}/#{@course.assessments.first.slug}\"")
     end
   end
 end

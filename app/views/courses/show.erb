@@ -8,7 +8,9 @@
       </td>
       <% @course.assessments.each do |assessment| %>
       <td>
-        <%= assessment.name %>
+        <a href="/courses/<%= @course.slug %>/<%= assessment.slug %>">
+          <%= assessment.name %>
+        </a>
       </td>
       <% end %>
     </tr>
