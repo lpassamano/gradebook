@@ -92,5 +92,10 @@ describe ApplicationController do
       get '/courses'
       expect(last_response.body).to include("<a href=\"/courses")
     end
+
+    it 'has a link to add a new course' do
+      get '/courses'
+      expect(last_response.body).to include("<a href=\"/courses/new\"")
+    end
   end
 end
