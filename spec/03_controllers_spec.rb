@@ -144,5 +144,13 @@ describe ApplicationController do
       expect(last_response.body).to include("Gil")
       expect(last_response.body).to include("Serge")
     end
+
+    it 'can only be viewed if logged in' do
+
+    end
   end
 end
+
+#tests to add when building out the student features
+  # student cannot access the add/edit course forms
+  # student does not see any links to edit/add forms 
