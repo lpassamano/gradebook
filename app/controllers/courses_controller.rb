@@ -24,4 +24,9 @@ class CoursesController < ApplicationController
     course.save
     redirect "/courses/#{course.slug}"
   end
+
+  get '/courses/:slug' do
+    @course = Course.find_by_slug(params[:slug])
+    erb :"courses/show"
+  end
 end
