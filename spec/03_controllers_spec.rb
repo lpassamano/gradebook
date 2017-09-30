@@ -98,4 +98,11 @@ describe ApplicationController do
       expect(last_response.body).to include("<a href=\"/courses/new\"")
     end
   end
+
+  describe "New Course View" do
+    it 'has a form to add a new course' do
+      get '/courses/new'
+      expect(last_response.body).to include("<form")
+    end
+  end
 end
