@@ -3,7 +3,7 @@
 <ul>
   <% @user.courses.each do |course| %>
     <li>
-      <%= course.name %>
+      <a href="/courses/<%= course.slug %>"><%= course.name %></a>
     </li>
   <% end %>
 </ul>

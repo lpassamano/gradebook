@@ -22,7 +22,7 @@ class ApplicationController < Sinatra::Base
     end
 
     def current_user
-      Student.find(session[:user_id]) || Instructor.find(session[:user_id])
+      Student.find_by(id: session[:user_id]) || Instructor.find_by(id: session[:user_id])
     end
   end
 end
