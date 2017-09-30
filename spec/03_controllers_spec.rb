@@ -82,6 +82,7 @@ describe ApplicationController do
       params = {email: "leigh@leigh.com", password: "1234"}
       post '/instructor/login', params
     end
+
     it 'shows all courses associated with the current user' do
       get '/courses'
       expect(last_response.body).to include("Physics 115")
@@ -97,9 +98,21 @@ describe ApplicationController do
       get '/courses'
       expect(last_response.body).to include("<a href=\"/courses/new\"")
     end
+
+    it 'can only be viewed if logged in' do
+      get '/logout'
+      get '/courses/new'
+      expect(last_response.location).to include("/")
+    end
   end
 
   describe "New Course View" do
+    before do
+      @user = Instructor.create(name: "Leigh", email: "leigh@leigh.com", password: "1234")
+      params = {email: "leigh@leigh.com", password: "1234"}
+      post '/instructor/login', params
+    end
+
     it 'has a form to add a new course' do
       get '/courses/new'
       expect(last_response.body).to include("<form")
@@ -146,11 +159,13 @@ describe ApplicationController do
     end
 
     it 'can only be viewed if logged in' do
-
+      get '/logout'
+      get '/courses/new'
+      expect(last_response.location).to include("/")
     end
   end
 end
 
 #tests to add when building out the student features
   # student cannot access the add/edit course forms
-  # student does not see any links to edit/add forms 
+  # student does not see any links to edit/add forms
