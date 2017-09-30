@@ -2,5 +2,17 @@
 
 <form method="POST" action="/courses">
   <input type="text" name="course[name]" id="name" placeholder="Course Name" />
+  <p>
+    Course Roster:<br />
+    <em>maximum 15 students</em>
+  </p>
+  <ol>
+    <% 15.times do %>
+      <li>
+        <input type="text" name="course[students][][name]" placeholder="Student Name" />
+        <input type="text" name="course[students][][email]" placeholder="Student Email" />
+      </li>
+    <% end %>
+  </ol>
   <input type="submit" value="Add Course" />
 </form>

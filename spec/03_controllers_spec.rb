@@ -108,7 +108,7 @@ describe ApplicationController do
     it 'has fields for entering course name and up to 15 students' do
       get '/courses/new'
       expect(last_response.body).to include("course[name]")
-      expect(find('ol')).to have_selector('li', count: 15)
+      expect(last_response.body).to include("15")
     end
   end
 end
