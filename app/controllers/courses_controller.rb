@@ -26,6 +26,7 @@ class CoursesController < ApplicationController
   end
 
   get '/courses/:slug' do
+    redirect '/' if !logged_in?
     @course = Course.find_by_slug(params[:slug])
     @course.assessments.sort_by {|assessment| assessment[:id]}
     @course.students.each do |student|

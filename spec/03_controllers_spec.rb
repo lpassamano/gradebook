@@ -164,6 +164,10 @@ describe ApplicationController do
 
   describe "Course Show Page" do
     before do
+      user = Instructor.create(name: "Leigh", email: "leigh@leigh.com", password: "1234")
+      params = {email: "leigh@leigh.com", password: "1234"}
+      post '/instructor/login', params
+
       @course = Course.create(name: "Photography")
       becky = Student.create(name: "Becky", email: "becky@test.edu", password: "Becky")
       chaz = Student.create(name: "Chaz", email: "chaz@test.edu", password: "Chaz")
@@ -192,7 +196,7 @@ describe ApplicationController do
     end
 
     it 'displays the course name, student roster, assigments, and student grades' do
-      #binding.pry
+
       get "/courses/#{@course.slug}"
       expect(last_response.body).to include("Photography")
       expect(last_response.body).to include("Becky")
@@ -201,7 +205,9 @@ describe ApplicationController do
     end
 
     it 'can only be viewed when logged in' do
-
+      get '/logout'
+      get "/courses/#{@course.slug}"
+      expect(last_response.location).to include("/")
     end
 
     it 'has a link to edit the course information' do
