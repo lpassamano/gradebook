@@ -211,11 +211,12 @@ describe ApplicationController do
     end
 
     it 'has a link to edit the course information' do
-
+      get "/courses/#{@course.slug}"
+      expect(last_response.body).to include("<a href=\"/courses/#{@course.slug}/edit\"")
     end
 
     it 'has a link to add assessment form' do
-
+  
     end
 
     it 'has a link for each existing assessment to indivisual assessment show page' do
