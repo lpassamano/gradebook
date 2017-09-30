@@ -106,7 +106,7 @@ describe ApplicationController do
     end
   end
 
-  describe "New Course View" do
+  describe "New Course Form" do
     before do
       @user = Instructor.create(name: "Leigh", email: "leigh@leigh.com", password: "1234")
       params = {email: "leigh@leigh.com", password: "1234"}
