@@ -161,6 +161,29 @@ describe ApplicationController do
       expect(last_response.location).to include("/")
     end
   end
+
+  describe "Course Show Page" do
+    before do
+      @course = Course.create(name: "Photography")
+      leigh = Student.create(name: "Leigh", email: "leigh@test.edu", password: "Leigh")
+      becky = Student.create(name: "Becky", email: "becky@test.edu", password: "Becky")
+      chaz = Student.create(name: "Chaz", email: "chaz@test.edu", password: "Chaz")
+      report = Assessment.create(name: "Report")
+      essay = Assessment.create(name: "Essay")
+      exam = Assessment.create(name: "Final Exam")
+      @course.students << [leigh, becky, chaz]
+      @course.assessments << [report, essay, exam]
+      @course.save
+    end
+
+    it 'displays the course name, student roster, and assigments' do
+      get "/courses/#{@course.slug}"
+      expect(last_response.body).to include("Photography")
+      expect(last_response.body).to include("Becky")
+      expect(last_response.body).to include("Essay")
+      expect(last_response.body).to include("<table>")
+    end
+  end
 end
 
 #tests to add when building out the student features
