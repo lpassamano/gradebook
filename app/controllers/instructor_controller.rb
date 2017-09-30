@@ -37,8 +37,4 @@ class InstructorController < ApplicationController
       redirect "/instructor/login"
     end
   end
-
-  get '/courses' do
-    erb :"courses/index"
-  end
 end

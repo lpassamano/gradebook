@@ -1,1 +1,9 @@
 <h3>Your Courses</h3>
+
+<ul>
+  <% @user.courses.each do |course| %>
+    <li>
+      <%= course.name %>
+    </li>
+  <% end %>
+</ul>
