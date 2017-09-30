@@ -13,15 +13,15 @@ class CoursesController < ApplicationController
 
   post '/courses' do
     course = Course.create(name: params[:course][:name])
-    students = params[:course][:students].collect do |student|
+    students = params[:course][:students].each do |student|
       if student[:name] != "" && student[:email] != ""
         s = Student.new(name: student[:name], email: student[:email])
         s.password = s.name
         s.save
+        course.students << s
+        course.save
       end
     end
-    course.students << students
-    course.save
     redirect "/courses/#{course.slug}"
   end
 

@@ -152,10 +152,7 @@ describe ApplicationController do
         }
       }
       post '/courses', params
-      expect(last_response.body).to include("Beginner Painting")
-      expect(last_response.body).to include("Julia")
-      expect(last_response.body).to include("Gil")
-      expect(last_response.body).to include("Serge")
+      expect(Course.find_by(name: "Beginner Painting").students.count).to eq(3)
     end
 
     it 'can only be viewed if logged in' do
