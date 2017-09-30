@@ -199,6 +199,22 @@ describe ApplicationController do
       expect(last_response.body).to include("Essay")
       expect(last_response.body).to include("80")
     end
+
+    it 'can only be viewed when logged in' do
+
+    end
+
+    it 'has a link to edit the course information' do
+
+    end
+
+    it 'has a link to add assessment form' do
+
+    end
+
+    it 'has a link for each existing assessment to indivisual assessment show page' do
+
+    end
   end
 end
 
