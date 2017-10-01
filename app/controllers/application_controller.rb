@@ -11,10 +11,6 @@ class ApplicationController < Sinatra::Base
     erb :index
   end
 
-  get '/logout' do
-    session.clear if logged_in?
-    redirect "/"
-  end
 
   helpers do
     def logged_in?
