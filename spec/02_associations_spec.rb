@@ -40,7 +40,7 @@ describe 'Course Associations' do
     leigh = User.create(name: "Leigh", email: "leigh@test.edu", password: "5678")
     becky = User.create(name: "Becky", email: "becky@test.edu", password: "asdf")
     @course.users << [leigh, becky]
-    @course.save 
+    @course.save
 
     expect(Course.find_by(name: "Test Course").users.count).to eq(2)
   end
@@ -85,12 +85,12 @@ describe "Grade Associations" do
     @grade = Grade.create(score: "100")
   end
 
-  it 'belongs to a student' do
-    leigh = Student.create(name: "Leigh", password: "1234")
-    @grade.student = leigh
+  it 'belongs to a user' do
+    leigh = User.create(name: "Leigh", password: "1234")
+    @grade.user = leigh
     @grade.save
 
-    expect(Grade.find_by(score: "100").student).to eq(leigh)
+    expect(Grade.find_by(score: "100").user).to eq(leigh)
   end
 
   it 'belongs to an assessment' do
