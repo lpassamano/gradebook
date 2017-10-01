@@ -7,7 +7,8 @@
   <p>
     Create account as:
   </p>
-  <input type="checkbox" value="Instructor" name="role" />
-  <input type="checkbox" value="Student" name="role" />
+  <% @roles.each do |role| %>
+    <input type="radio" value="<%= role.name %>" name="role_ids[]" id="role_<%= role.id %>"/>
+  <% end %>
   <input type="submit" value="Signup" />
 </form>

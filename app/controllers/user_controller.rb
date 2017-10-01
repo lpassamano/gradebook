@@ -4,6 +4,7 @@ class UserController < ApplicationController
     if logged_in?
       redirect "/courses"
     else
+      @roles = Role.all
       erb :"user/signup"
     end
   end

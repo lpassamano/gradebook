@@ -29,15 +29,24 @@ describe ApplicationController do
     end
 
     it 'has option to choose to sign up as a student or instructor' do
+      Role.create(name: "Student")
+      Role.create(name: "Instructor")
       get '/signup'
-      expect(last_response.body).to include("<input type=\"checkbox\" value=\"Instructor\"")
-      expect(last_response.body).to include("<input type=\"checkbox\" value=\"Student\"")
+      expect(last_response.body).to include("<input type=\"radio\" value=\"Instructor\"")
+      expect(last_response.body).to include("<input type=\"radio\" value=\"Student\"")
     end
 
     it 'redirects you to courses index' do
       params = {name: "Doc Brown", email: "doc@test.edu", password: "1234"}
       post '/signup', params
       expect(last_response.location).to include("/courses")
+    end
+
+    it 'instantiates a user with a role' do
+      Role.create(name: "Student")
+      Role.create(name: "Instructor")
+      params = {name: "Doc Brown", email: "doc@test.edu", password: "1234"}
+      post '/signup', params
     end
   end
 
