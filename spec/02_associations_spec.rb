@@ -36,21 +36,13 @@ describe 'Course Associations' do
     @course = Course.create(name: "Test Course")
   end
 
-  it 'belongs to instructor' do
-    instructor = Instructor.create(name: "Person", email: "p@test.edu", password: "1234")
-    @course.instructor = instructor
-    @course.save
+  it 'has many users' do
+    leigh = User.create(name: "Leigh", email: "leigh@test.edu", password: "5678")
+    becky = User.create(name: "Becky", email: "becky@test.edu", password: "asdf")
+    @course.users << [leigh, becky]
+    @course.save 
 
-    expect(Course.find_by(name: "Test Course").instructor).to eq(instructor)
-  end
-
-  it 'has many students' do
-    leigh = Student.create(name: "Leigh", email: "leigh@test.edu", password: "5678")
-    becky = Student.create(name: "Becky", email: "becky@test.edu", password: "asdf")
-    @course.students << [leigh, becky]
-    @course.save
-
-    expect(Course.find_by(name: "Test Course").students.count).to eq(2)
+    expect(Course.find_by(name: "Test Course").users.count).to eq(2)
   end
 
   it 'has many assessments' do
@@ -61,44 +53,6 @@ describe 'Course Associations' do
     @course.save
 
     expect(Course.find_by(name: "Test Course").assessments.include?(exam)).to eq(true)
-  end
-end
-
-describe 'Instructor Associations' do
-  before do
-    @instructor = Instructor.create(name: "Charles", email: "c@test.edu", password: "1234")
-  end
-
-  it 'has many courses' do
-    math = Course.create(name: "Math")
-    chem = Course.create(name: "Chemistry")
-    @instructor.courses << [math, chem]
-    @instructor.save
-
-    expect(Instructor.find_by(name: "Charles").courses.count).to eq(2)
-  end
-end
-
-describe "Student Associations" do
-  before do
-    @student = Student.create(name: "Leigh", email: "l@test.edu", password: "1234")
-  end
-
-  it 'has many courses' do
-    art = Course.create(name: "Art")
-    music = Course.create(name: "Music")
-    @student.courses << [art, music]
-    @student.save
-
-    expect(Student.find_by(name: "Leigh").courses.include?(art)).to eq(true)
-  end
-
-  it 'has many grades' do
-    exam = Grade.create(score: "95")
-    project = Grade.create(score: "50")
-    @student.grades << [exam, project]
-
-    expect(Student.find_by(name: "Leigh").grades.count).to eq(2)
   end
 end
 
@@ -143,7 +97,6 @@ describe "Grade Associations" do
     exam = Assessment.create
     @grade.assessment = exam
     @grade.save
-
     expect(Grade.find_by(score: "100").assessment).to eq(exam)
   end
 end
