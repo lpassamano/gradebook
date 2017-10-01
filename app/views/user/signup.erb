@@ -8,7 +8,7 @@
     Create account as:
   </p>
   <% @roles.each do |role| %>
-    <input type="radio" value="<%= role.name %>" name="role_ids[]" id="role_<%= role.id %>"/>
+    <input type="radio" value="<%= role.name %>" name="role" id="role_<%= role.id %>"/>
   <% end %>
-  <input type="submit" value="Signup" />
+  <input type="submit" value="Signup" id="submit" />
 </form>

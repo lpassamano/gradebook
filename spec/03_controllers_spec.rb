@@ -42,11 +42,18 @@ describe ApplicationController do
       expect(last_response.location).to include("/courses")
     end
 
-    it 'instantiates a user with a role' do
+    it 'creates a user with a role' do
       Role.create(name: "Student")
       Role.create(name: "Instructor")
       params = {name: "Doc Brown", email: "doc@test.edu", password: "1234"}
-      post '/signup', params
+      visit '/signup'
+      fill_in :name, :with => "Indiana Jones"
+      fill_in :email, :with => "indy@email.com"
+      fill_in :password, :with => "1234"
+      choose 'role_2'
+      find('input[id="submit"]').click
+
+      expect(User.find_by(name: "Doc Brown").role.id).to eq(2)
     end
   end
 
