@@ -10,45 +10,26 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171001200014) do
+ActiveRecord::Schema.define(version: 20171001201110) do
 
   create_table "assessments", force: :cascade do |t|
     t.string "name"
     t.integer "course_id"
   end
 
-  create_table "course_students", force: :cascade do |t|
-    t.integer "course_id"
-    t.integer "student_id"
-  end
-
   create_table "courses", force: :cascade do |t|
     t.string "name"
-    t.integer "instructor_id"
   end
 
   create_table "grades", force: :cascade do |t|
     t.string "score"
     t.string "comment"
     t.integer "assessment_id"
-    t.integer "student_id"
     t.integer "user_id"
-  end
-
-  create_table "instructors", force: :cascade do |t|
-    t.string "name"
-    t.string "email"
-    t.string "password_digest"
   end
 
   create_table "roles", force: :cascade do |t|
     t.string "name"
-  end
-
-  create_table "students", force: :cascade do |t|
-    t.string "name"
-    t.string "email"
-    t.string "password_digest"
   end
 
   create_table "user_courses", force: :cascade do |t|
