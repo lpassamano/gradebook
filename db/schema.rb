@@ -50,6 +50,7 @@ ActiveRecord::Schema.define(version: 20171001185431) do
     t.string "name"
     t.string "email"
     t.string "password_digest"
+    t.integer "role_id"
   end
 
 end
