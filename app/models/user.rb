@@ -1,8 +1,8 @@
 class User < ActiveRecord::Base
   has_secure_password
 
-  belongs_to :role 
-  has_many :course_students
-  has_many :courses, through: :course_students
+  belongs_to :role
+  has_many :user_courses 
+  has_many :courses, through: :user_courses
   has_many :grades
 end

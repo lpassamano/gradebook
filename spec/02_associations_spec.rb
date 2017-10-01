@@ -6,15 +6,19 @@ describe 'User Associations' do
   end
 
   it 'has many courses' do
+    math = Course.create(name: "Math")
+    chem = Course.create(name: "Chemistry")
+    @user.courses << [math, chem]
 
+    expect(User.find_by(name: "Charles").courses.count).to eq(2)
   end
 
   it 'belongs to a role' do
 
   end
 
-  it 'has many grades if the user is a student' do
-    
+  it 'has many grades' do
+
   end
 end
 
