@@ -1,4 +1,5 @@
 class InstructorController < ApplicationController
+  #change name to UserController
 
   get '/instructor/signup' do
     if logged_in?
