@@ -3,7 +3,6 @@ class CoursesController < ApplicationController
   get '/courses' do
     redirect '/' if !logged_in?
     @user = current_user
-    binding.pry 
     erb :"courses/index"
   end
 
