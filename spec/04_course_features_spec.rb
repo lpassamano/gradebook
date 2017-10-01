@@ -3,7 +3,10 @@ require 'spec_helper'
 describe "Course Features" do
   describe "Courses Index" do
     before do
-      @user = Instructor.create(name: "Leigh", email: "leigh@leigh.com", password: "1234")
+      @student = Role.create(name: "Student")
+      @instructor = Role.create(name: "Instructor")
+      @user = User.create(name: "Leigh", email: "leigh@leigh.com", password: "1234")
+      @user.role = @instructor
       course1 = Course.create(name: "Physics 115")
       course2 = Course.create(name: "Art History 101")
       @user.courses. << [course1, course2]
@@ -23,9 +26,16 @@ describe "Course Features" do
       expect(last_response.body).to include("<a href=\"/courses")
     end
 
-    it 'has a link to add a new course' do
+    it 'has a link to add a new course if the user is an instructor' do
       get '/courses'
       expect(last_response.body).to include("<a href=\"/courses/new\"")
+    end
+
+    it 'does not have a link to add a new course if the user is a student ' do
+      get '/logout'
+      student = User.new(name: "Leigh", password: "1234")
+      student.role = @student
+      expect(last_response.body).not_to include("<a href=\"/courses/new\"")
     end
 
     it 'can only be viewed if logged in' do
