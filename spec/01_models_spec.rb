@@ -18,6 +18,11 @@ describe User do
 
     expect(User.find_by(name: "test").role).to eq(role)
   end
+
+  it 'has a secure password' do
+    expect(@user.authenticate("test")).to eq(false)
+    expect(@user.authenticate("1234")).to eq(@user)
+  end
 end
 
 describe Instructor do
