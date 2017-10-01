@@ -19,22 +19,22 @@ class UserController < ApplicationController
     end
   end
 
-  get '/instructor/login' do
+  get '/login' do
     if logged_in?
-      redirect "/instructor/courses"
+      redirect "/courses"
     else
-      erb :"instructor/login"
+      erb :"user/login"
     end
   end
 
-  post '/instructor/login' do
-    instructor = Instructor.find_by(email: params[:email])
-    if instructor && instructor.authenticate(params[:password])
-      session[:user_id] = instructor.id
+  post '/login' do
+    user = User.find_by(email: params[:email])
+    if user && user.authenticate(params[:password])
+      session[:user_id] = user.id
       redirect "/courses"
     else
       #add flash error message later
-      redirect "/instructor/login"
+      redirect "/login"
     end
   end
 end
