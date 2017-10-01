@@ -12,7 +12,7 @@ describe "Course Features" do
       @user.courses. << [course1, course2]
       @user.save
       params = {email: "leigh@leigh.com", password: "1234"}
-      post '/instructor/login', params
+      post '/login', params
     end
 
     it 'shows all courses associated with the current user' do
@@ -47,7 +47,10 @@ describe "Course Features" do
 
   describe "New Course Form" do
     before do
-      @user = Instructor.create(name: "Leigh", email: "leigh@leigh.com", password: "1234")
+      @instructor = Role.create(name: "Instructor")
+      @student = Role.create(name: "Student")
+      @user = User.create(name: "Leigh", email: "leigh@leigh.com", password: "1234")
+      @user.role = @instructor
       params = {email: "leigh@leigh.com", password: "1234"}
       post '/instructor/login', params
     end
@@ -70,7 +73,7 @@ describe "Course Features" do
       expect(last_response.body).to include("Philosophy 101")
     end
 
-    it 'creates a new instance of student for each student entered into the roster' do
+    it 'creates a new instance of user with a role of student for each student entered into the roster' do
       params = {
         :course => {
           :name => "Beginner Painting",
@@ -91,13 +94,25 @@ describe "Course Features" do
         }
       }
       post '/courses', params
-      expect(Course.find_by(name: "Beginner Painting").students.count).to eq(3)
+      course = Course.find_by(name: "Beginner Painting")
+      roles = course.users.collect { |user| user.role.name }
+      expect(roles.count("Student")).to eq(3)
     end
 
     it 'can only be viewed if logged in' do
       get '/logout'
       get '/courses/new'
       expect(last_response.location).to include("/")
+    end
+
+    it 'does not allow student users to view the form' do
+      get '/logout'
+      student = User.create(email: "test@test.com", password: "1234")
+      student.role = @student
+      params = {email: "test@test.com", password: "1234"}
+      post '/login', params
+      get '/courses/new'
+      expect(last_response.location).to eq("/courses")
     end
   end
 
