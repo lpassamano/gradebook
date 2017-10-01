@@ -1,5 +1,23 @@
 require 'spec_helper'
 
+describe 'User Associations' do
+  before do
+    @user = User.create(name: "Charles", email: "c@test.edu", password: "1234")
+  end
+
+  it 'has many courses' do
+
+  end
+
+  it 'belongs to a role' do
+
+  end
+
+  it 'has many grades if the user is a student' do
+    
+  end
+end
+
 describe 'Course Associations' do
   before do
     @course = Course.create(name: "Test Course")
@@ -111,7 +129,7 @@ describe "Grade Associations" do
   it 'belongs to an assessment' do
     exam = Assessment.create
     @grade.assessment = exam
-    @grade.save 
+    @grade.save
 
     expect(Grade.find_by(score: "100").assessment).to eq(exam)
   end
