@@ -1,8 +1,13 @@
 <h3>Instructor Signup</h3>
 
-<form method="POST" action="/instructor/signup">
+<form method="POST" action="/signup">
   <input type="text" name="name" id="name" placeholder="Your Name" />
   <input type="text" name="email" id="email" placeholder="Email" />
   <input type="password" name="password" id="password" placeholder="Create Password" />
+  <p>
+    Create account as:
+  </p>
+  <input type="checkbox" value="Instructor" name="role" />
+  <input type="checkbox" value="Student" name="role" />
   <input type="submit" value="Signup" />
 </form>

@@ -1,22 +1,21 @@
-class InstructorController < ApplicationController
-  #change name to UserController
+class UserController < ApplicationController
 
-  get '/instructor/signup' do
+  get '/signup' do
     if logged_in?
       redirect "/courses"
     else
-      erb :"instructor/signup"
+      erb :"user/signup"
     end
   end
 
-  post '/instructor/signup' do
-    instructor = Instructor.new(params)
-    if instructor.save && params[:name] != "" && params[:email] != ""
-      session[:user_id] = instructor.id
+  post '/signup' do
+    user = User.new(params)
+    if user.save && params[:name] != "" && params[:email] != ""
+      session[:user_id] = user.id
       redirect "/courses"
     else
       #add flash error message later
-      redirect "/instructor/signup"
+      redirect "/signup"
     end
   end
 

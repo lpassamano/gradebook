@@ -1,5 +1,5 @@
 require_relative './config/environment'
 
-use InstructorController
+use UserController
 use CoursesController
 run ApplicationController
