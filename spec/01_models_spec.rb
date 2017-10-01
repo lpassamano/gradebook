@@ -11,6 +11,13 @@ describe User do
     expect(@user.password).to eq("1234")
   end
 
+  it 'can be assigned a role' do
+    role = Role.create(name: "Instructor")
+    @user.role = role
+    @user.save
+
+    expect(User.find_by(name: "test").role).to eq(role)
+  end
 end
 
 describe Instructor do
