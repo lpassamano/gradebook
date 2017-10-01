@@ -1,5 +1,18 @@
 require 'spec_helper'
 
+describe User do
+  before do
+    @user = User.create(name: "test", email: "test@email.com", password: "1234")
+  end
+
+  it "is instantiated with a name, email, and password" do
+    expect(@user.name).to eq("test")
+    expect(@user.email).to eq("test@email.com")
+    expect(@user.password).to eq("1234")
+  end
+
+end
+
 describe Instructor do
   before do
     @instructor = Instructor.create(name: "test", email: "test@test.edu", password: "1234")
