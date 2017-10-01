@@ -47,12 +47,10 @@ describe "Course Features" do
 
   describe "New Course Form" do
     before do
-      @instructor = Role.create(name: "Instructor")
-      @student = Role.create(name: "Student")
       @user = User.create(name: "Leigh", email: "leigh@leigh.com", password: "1234")
-      @user.role = @instructor
+      @user.role = Role.find_or_create_by(name: "Instructor")
       params = {email: "leigh@leigh.com", password: "1234"}
-      post '/instructor/login', params
+      post '/login', params
     end
 
     it 'has a form to add a new course' do
@@ -95,6 +93,7 @@ describe "Course Features" do
       }
       post '/courses', params
       course = Course.find_by(name: "Beginner Painting")
+      #binding.pry
       roles = course.users.collect { |user| user.role.name }
       expect(roles.count("Student")).to eq(3)
     end
@@ -108,7 +107,7 @@ describe "Course Features" do
     it 'does not allow student users to view the form' do
       get '/logout'
       student = User.create(email: "test@test.com", password: "1234")
-      student.role = @student
+      student.role = Role.find_or_create_by(name: "Student")
       params = {email: "test@test.com", password: "1234"}
       post '/login', params
       get '/courses/new'
