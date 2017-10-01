@@ -23,7 +23,11 @@ describe 'User Associations' do
   end
 
   it 'has many grades' do
+    exam = Grade.create(score: "95")
+    project = Grade.create(score: "50")
+    @user.grades << [exam, project]
 
+    expect(User.find_by(name: "Charles").grades.count).to eq(2)
   end
 end
 
