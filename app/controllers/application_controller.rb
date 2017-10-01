@@ -11,14 +11,13 @@ class ApplicationController < Sinatra::Base
     erb :index
   end
 
-
   helpers do
     def logged_in?
       !!session[:user_id]
     end
 
     def current_user
-      Student.find_by(id: session[:user_id]) || Instructor.find_by(id: session[:user_id])
+      User.find_by(id: session[:user_id])
     end
   end
 end
