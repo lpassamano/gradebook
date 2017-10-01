@@ -55,13 +55,11 @@ end
 
 describe Assessment do
   before do
-    @assessment = Assessment.create(name: "Final Exam", grade: "95", comment: "great job!")
+    @assessment = Assessment.create(name: "Final Exam")
   end
 
-  it 'is instantiated with a name, grade, and comment' do
+  it 'is instantiated with a name' do
     expect(@assessment.name).to eq("Final Exam")
-    expect(@assessment.grade).to eq("95")
-    expect(@assessment.comment).to eq("great job!")
   end
 end
 
