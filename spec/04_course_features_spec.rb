@@ -51,10 +51,12 @@ describe "Course Features" do
       Role.find_or_create_by(name: "Student")
       Role.find_or_create_by(name: "Instructor")
 
-      #user = User.create(name: "Leigh", email: #"leigh@university.edu", password: "1234")
-      #user.role = Role.find_by(name: "Instructor")
-      #params = {email: "leigh@university.edu", password: "1234"}
-      #post '/login', params
+      Role.find_or_create_by(name: "Instructor")
+      user = User.create(name: "Leigh", email: "leigh@university.edu", password: "1234")
+      user.role = Role.find_by(name: "Instructor")
+      user.save
+      params = {email: "leigh@university.edu", password: "1234"}
+      post '/login', params
     end
 
     it 'has a form to add a new course' do
@@ -63,7 +65,6 @@ describe "Course Features" do
       user.role = Role.find_by(name: "Instructor")
       user.save
       params = {email: "leigh@university.edu", password: "1234"}
-      binding.pry
       post '/login', params
       get '/courses/new'
       expect(last_response.body).to include("<form")
@@ -118,7 +119,8 @@ describe "Course Features" do
     it 'does not allow student users to view the form' do
       get '/logout'
       student = User.create(email: "test@test.com", password: "1234")
-      student.role = Role.find_or_create_by(name: "Student")
+      student.role = Role.find_by(name: "Student")
+      student.save 
       params = {email: "test@test.com", password: "1234"}
       post '/login', params
       get '/courses/new'
