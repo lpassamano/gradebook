@@ -51,7 +51,6 @@ describe "Course Features" do
       Role.find_or_create_by(name: "Student")
       Role.find_or_create_by(name: "Instructor")
 
-      Role.find_or_create_by(name: "Instructor")
       user = User.create(name: "Leigh", email: "leigh@university.edu", password: "1234")
       user.role = Role.find_by(name: "Instructor")
       user.save
@@ -119,12 +118,12 @@ describe "Course Features" do
     it 'does not allow student users to view the form' do
       get '/logout'
       student = User.create(email: "test@test.com", password: "1234")
-      student.role = Role.find_by(name: "Student")
-      student.save 
+      student.role = Role.find_or_create_by(name: "Student")
+      student.save
       params = {email: "test@test.com", password: "1234"}
       post '/login', params
       get '/courses/new'
-      expect(last_response.location).to eq("/courses")
+      expect(last_response.location).to include("/courses")
     end
   end
 

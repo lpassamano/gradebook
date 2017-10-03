@@ -10,7 +10,7 @@ class CoursesController < ApplicationController
     #binding.pry
     if !logged_in?
       redirect '/'
-    elsif current_user_instructor?
+    elsif current_user.instructor?
       erb :"courses/new"
     else
       redirect '/courses'
