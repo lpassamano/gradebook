@@ -35,6 +35,7 @@ describe "Course Features" do
       get '/logout'
       student = User.new(name: "Leigh", password: "1234")
       student.role = @student
+####################### finish this test!!!!
       expect(last_response.body).not_to include("<a href=\"/courses/new\"")
     end
 
@@ -47,13 +48,23 @@ describe "Course Features" do
 
   describe "New Course Form" do
     before do
-      @user = User.create(name: "Leigh", email: "leigh@leigh.com", password: "1234")
-      @user.role = Role.find_or_create_by(name: "Instructor")
-      params = {email: "leigh@leigh.com", password: "1234"}
-      post '/login', params
+      Role.find_or_create_by(name: "Student")
+      Role.find_or_create_by(name: "Instructor")
+
+      #user = User.create(name: "Leigh", email: #"leigh@university.edu", password: "1234")
+      #user.role = Role.find_by(name: "Instructor")
+      #params = {email: "leigh@university.edu", password: "1234"}
+      #post '/login', params
     end
 
     it 'has a form to add a new course' do
+      Role.find_or_create_by(name: "Instructor")
+      user = User.create(name: "Leigh", email: "leigh@university.edu", password: "1234")
+      user.role = Role.find_by(name: "Instructor")
+      user.save
+      params = {email: "leigh@university.edu", password: "1234"}
+      binding.pry
+      post '/login', params
       get '/courses/new'
       expect(last_response.body).to include("<form")
     end

@@ -7,9 +7,14 @@ class CoursesController < ApplicationController
   end
 
   get '/courses/new' do
-    redirect '/' if !logged_in?
-    redirect '/courses' if current_user_student?
-    erb :"courses/new"
+    #binding.pry
+    if !logged_in?
+      redirect '/'
+    elsif current_user_instructor?
+      erb :"courses/new"
+    else
+      redirect '/courses'
+    end
   end
 
   post '/courses' do
