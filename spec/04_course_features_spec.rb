@@ -132,13 +132,13 @@ describe "Course Features" do
 
   describe "Course Show Page" do
     before do
-      instructor = Role.create(name: "Instructor")
-      student = Role.create(name: "Student")
+      instructor = Role.find_or_create_by(name: "Instructor")
+      student = Role.find_or_create_by(name: "Student")
       user = User.create(name: "Leigh", email: "leigh@leigh.com", password: "1234")
       user.role = instructor
       user.save
       params = {email: "leigh@leigh.com", password: "1234"}
-      post '/instructor/login', params
+      post '/login', params
 
       @course = Course.create(name: "Photography")
       becky = User.create(name: "Becky", email: "becky@test.edu", password: "Becky")
@@ -172,12 +172,6 @@ describe "Course Features" do
     end
 
     it 'displays the course name, student roster, assigments, and student grades' do
-      user = User.create(name: "Leigh", email: "leigh@leigh.com", password: "1234")
-      user.role = Role.find_by(name: "Instructor")
-      user.save
-      params = {email: "leigh@leigh.com", password: "1234"}
-      post '/instructor/login', params
-
       get "/courses/#{@course.slug}"
       expect(last_response.body).to include("Photography")
       expect(last_response.body).to include("Becky")
@@ -217,17 +211,25 @@ describe "Course Features" do
 
   describe "Edit Course Form" do
     before do
-      user = Instructor.create(name: "Leigh", email: "leigh@leigh.com", password: "1234")
+      instructor = Role.find_or_create_by(name: "Instructor")
+      student = Role.find_or_create_by(name: "Student")
+      user = User.create(name: "Leigh", email: "leigh@leigh.com", password: "1234")
+      user.role = instructor
+      user.save
       params = {email: "leigh@leigh.com", password: "1234"}
-      post '/instructor/login', params
+      post '/login', params
 
       @course = Course.create(name: "Photography")
-      becky = Student.create(name: "Becky", email: "becky@test.edu", password: "Becky")
-      chaz = Student.create(name: "Chaz", email: "chaz@test.edu", password: "Chaz")
+      becky = User.create(name: "Becky", email: "becky@test.edu", password: "Becky")
+      becky.role = student
+      becky.save
+      chaz = User.create(name: "Chaz", email: "chaz@test.edu", password: "Chaz")
+      chaz.role = student
+      chaz.save
       report = Assessment.create(name: "Report")
       essay = Assessment.create(name: "Essay")
       exam = Assessment.create(name: "Final Exam")
-      @course.students << [becky, chaz]
+      @course.users << [becky, chaz]
       @course.assessments << [report, essay, exam]
       @course.save
       becky_report = Grade.create(score: "75")
