@@ -16,15 +16,17 @@
     </tr>
   </thead>
   <tbody>
-    <% @course.students.each do |student| %>
-    <tr>
-      <td>
-        <%= student.name %>
-      </td>
-      <% student.grades.each do |grade| %>
-        <td>
-          <%= grade.score %>
-        </td>
+    <% @course.users.each do |user| %>
+      <% if user.student? %>
+        <tr>
+          <td>
+            <%= student.name %>
+          </td>
+            <% student.grades.each do |grade| %>
+          <td>
+            <%= grade.score %>
+          </td>
+        <% end %>
       <% end %>
     </tr>
     <% end %>
