@@ -206,6 +206,13 @@ describe "Course Features" do
       expect(last_response.body).to include("<a href=\"/courses/#{@course.slug}/#{@course.assessments.first.slug}\"")
     end
 
+    it 'course show page for student only displays their grades' do
+
+    end
+
+    it 'course show page for student does not have links to edit course or add new assessments' do
+
+    end
   end
 
   describe "Edit Course Form" do
