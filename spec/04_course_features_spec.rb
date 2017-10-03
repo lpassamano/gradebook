@@ -200,7 +200,7 @@ describe "Course Features" do
       expect(last_response.body).to include("<a href=\"/courses/#{@course.slug}/#{@course.assessments.first.slug}\"")
     end
 
-    it 'course show page for student only displays their grades' do
+    it 'course show page for student users only displays their grades' do
 
     end
 
@@ -264,6 +264,10 @@ describe "Course Features" do
 
     it 'allows user to delete the course' do
 
+    end
+
+    it 'is not visible to student users' do
+      
     end
   end
 end
