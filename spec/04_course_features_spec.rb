@@ -33,10 +33,13 @@ describe "Course Features" do
 
     it 'does not have a link to add a new course if the user is a student ' do
       get '/logout'
-      student = User.new(name: "Leigh", password: "1234")
-      student.role = @student
-####################### finish this test!!!!
-      expect(last_response.body).not_to include("<a href=\"/courses/new\"")
+      student = User.new(name: "Leigh", email: "test@leigh.com", password: "1234")
+      student.role = Role.find_or_create_by(name: "Student")
+      student.save
+      params = {email: "test@leigh.com", password: "1234"}
+      post '/login', params
+      get '/courses'
+      expect(last_response.body).not_to include("Add New Course")
     end
 
     it 'can only be viewed if logged in' do
