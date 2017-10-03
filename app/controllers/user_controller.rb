@@ -10,6 +10,7 @@ class UserController < ApplicationController
   end
 
   post '/signup' do
+    #binding.pry
     user = User.new(params)
     if user.save && params[:name] != "" && params[:email] != ""
       session[:user_id] = user.id
@@ -29,6 +30,7 @@ class UserController < ApplicationController
   end
 
   post '/login' do
+    #binding.pry
     user = User.find_by(email: params[:email])
     if user && user.authenticate(params[:password])
       session[:user_id] = user.id
