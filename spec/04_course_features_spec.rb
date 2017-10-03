@@ -187,12 +187,12 @@ describe "Course Features" do
 
     it 'has a link to edit the course information' do
       get "/courses/#{@course.slug}"
-      expect(last_response.body).to include("<a href=\"/courses/#{@course.slug}/edit\"")
+      expect(last_response.body).to include("Edit Course Info and Roster")
     end
 
     it 'has a link to add assessment form' do
       get "/courses/#{@course.slug}"
-      expect(last_response.body).to include("<a href=\"/courses/#{@course.slug}/new\"")
+      expect(last_response.body).to include("Add New Assessment")
     end
 
     it 'has a link for each existing assessment to individual assessment show page' do
