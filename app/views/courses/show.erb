@@ -20,9 +20,9 @@
       <% if user.student? %>
         <tr>
           <td>
-            <%= student.name %>
+            <%= user.name %>
           </td>
-            <% student.grades.each do |grade| %>
+            <% user.grades.each do |grade| %>
           <td>
             <%= grade.score %>
           </td>
