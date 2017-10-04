@@ -217,6 +217,10 @@ describe "Course Features" do
     it 'course show page for student does not have links to edit course or add new assessments' do
 
     end
+
+    it 'only users associated with the course can view the course show page' do
+
+    end
   end
 
   describe "Edit Course Form" do
