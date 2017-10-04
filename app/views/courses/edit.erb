@@ -30,13 +30,13 @@
   </ol>
 
   <p>
-    Assessments:
+    Assessments:<br />
+    <em>Uncheck box to delete assessment.</em>
   </p>
   <ol>
     <% @course.assessments.each do |assessment| %>
       <li>
-        <input type="text" name="course[assessments][][name]" value="<%= assessment.name %>" />
-        <input type="checkbox" name="course[assessments][][delete]" id="assessment_<%= assessment.id %>">Delete Assessment</input>
+        <input type="checkbox" name="course[assessment_ids][]" value="<%= assessment.id %>" checked><%= assessment.name %></input>
       </li>
     <% end %>
   </ol>
