@@ -3,15 +3,15 @@
 <table>
   <thead>
     <tr>
-      <td>
+      <th>
         Students
-      </td>
+      </th>
       <% @course.assessments.each do |assessment| %>
-      <td>
+      <th>
         <a href="/courses/<%= @course.slug %>/<%= assessment.slug %>">
           <%= assessment.name %>
         </a>
-      </td>
+      </th>
       <% end %>
     </tr>
   </thead>
