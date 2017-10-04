@@ -311,6 +311,8 @@ describe "Course Features" do
     end
 
     it 'does not list the instructor in the roster' do
+      get "/courses/#{@course.slug}/edit"
+      expect(last_response.body).not_to include("Leigh")
     end
 
     it 'allows user to add and remove assessments' do
