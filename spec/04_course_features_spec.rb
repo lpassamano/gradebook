@@ -201,7 +201,17 @@ describe "Course Features" do
     end
 
     it 'course show page for student users only displays their grades' do
+      student = User.create(name: "Rich", email: "rich@email.com", password: "1234")
+      student.role = Role.find_or_create_by(name: "Student")
+      student.save
+      params = {email: "rich@email.com", password: "1234"}
+      get '/logout'
+      post '/login', params
+      get "/courses/#{@course.slug}"
 
+      expect(last_response.body).not_to include("Becky")
+      expect(last_response.body).not_to include("Essay")
+      expect(last_response.body).not_to include("80")
     end
 
     it 'course show page for student does not have links to edit course or add new assessments' do
@@ -267,7 +277,7 @@ describe "Course Features" do
     end
 
     it 'is not visible to student users' do
-      
+
     end
   end
 end
