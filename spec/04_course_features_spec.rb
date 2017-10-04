@@ -296,7 +296,7 @@ describe "Course Features" do
           name: "Photography",
           user_ids: [
             chaz_id
-          ]
+          ],
           students: [
             {
               name: "Gil",
@@ -307,12 +307,10 @@ describe "Course Features" do
       }
 
       post "/courses/#{@course.slug}", params
-      expect(last_response.body).not_to include("Becky")
-      expect(last_response.body).to include("Gil")
+      expect(@course.users.count).to eq(3)
     end
 
     it 'does not list the instructor in the roster' do
-
     end
 
     it 'allows user to add and remove assessments' do

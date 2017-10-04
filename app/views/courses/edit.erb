@@ -11,7 +11,7 @@
     <% @course.users.each do |user| %>
       <% if user.student? %>
         <li>
-          <input type="checkbox" name="course[user_ids][]" value="<%= user.id %>" "checked"><%= user.name %></input>
+          <input type="checkbox" name="course[user_ids][]" value="<%= user.id %>" checked><%= user.name %></input>
         </li>
       <% end %>
     <% end %>

@@ -19,7 +19,7 @@ class CoursesController < ApplicationController
   post '/courses' do
     course = Course.create(name: params[:course][:name])
     course.users << current_user
-    students = params[:course][:students].each do |student|
+    params[:course][:students].each do |student|
       #binding.pry
       if student[:name] != "" && student[:email] != ""
         s = User.new(name: student[:name], email: student[:email])
@@ -67,7 +67,22 @@ class CoursesController < ApplicationController
   post '/courses/:slug' do
     course = Course.find_by_slug(params[:slug])
     course.name = params[:course][:name]
+    course.user_ids = params[:course][:user_ids]
+    course.users << current_user
     course.save
+    params[:course][:students].each do |student|
+      #binding.pry
+      if student[:name] != "" && student[:email] != ""
+        #binding.pry
+        s = User.new(name: student[:name], email: student[:email])
+        s.password = s.name
+        s.save
+        s.role = Role.find_or_create_by(name: "Student")
+        course.users << s
+        course.save
+        #binding.pry
+      end
+    end
     redirect "/courses/#{course.slug}"
   end
 end
