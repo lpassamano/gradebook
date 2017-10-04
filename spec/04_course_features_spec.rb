@@ -337,7 +337,7 @@ describe "Course Features" do
     end
 
     it 'allows user to delete the course' do
-      get "/courses/#{@course.slug}"
+      get "/courses/#{@course.slug}/edit"
       expect(last_response.body).to include("Delete Course")
     end
 
@@ -348,7 +348,7 @@ describe "Course Features" do
       student.save
       params = {email: "test@test.com", password: "1234"}
       post '/login', params
-      get "/courses/#{@course.slub}/edit"
+      get "/courses/#{@course.slug}/edit"
     end
   end
 end
