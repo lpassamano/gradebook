@@ -337,11 +337,18 @@ describe "Course Features" do
     end
 
     it 'allows user to delete the course' do
-
+      get "/courses/#{@course.slug}"
+      expect(last_response.body).to include("Delete Course")
     end
 
     it 'is not visible to student users' do
-
+      get '/logout'
+      student = User.create(email: "test@test.com", password: "1234")
+      student.role = Role.find_or_create_by(name: "Student")
+      student.save
+      params = {email: "test@test.com", password: "1234"}
+      post '/login', params
+      get "/courses/#{@course.slub}/edit"
     end
   end
 end
