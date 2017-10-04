@@ -141,7 +141,7 @@ describe "Course Features" do
       post '/login', params
 
       @course = Course.create(name: "Photography")
-      becky = User.create(name: "Becky", email: "becky@test.edu", password: "Becky")
+      @becky = User.create(name: "Becky", email: "becky@test.edu", password: "Becky")
       becky.role = student
       becky.save
       chaz = User.create(name: "Chaz", email: "chaz@test.edu", password: "Chaz")
@@ -201,17 +201,17 @@ describe "Course Features" do
     end
 
     it 'course show page for student users only displays their grades' do
-      student = User.create(name: "Rich", email: "rich@email.com", password: "1234")
-      student.role = Role.find_or_create_by(name: "Student")
-      student.save
-      params = {email: "rich@email.com", password: "1234"}
+      params = {email: "chaz@test.edu", password: "Chaz"}
       get '/logout'
       post '/login', params
       get "/courses/#{@course.slug}"
 
       expect(last_response.body).not_to include("Becky")
-      expect(last_response.body).not_to include("Essay")
       expect(last_response.body).not_to include("80")
+
+      expect(last_response.body).to include("Photography")
+      expect(last_response.body).to include("Report")
+      expect(last_response.body).to include("79")
     end
 
     it 'course show page for student does not have links to edit course or add new assessments' do
