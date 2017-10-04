@@ -1,0 +1,57 @@
+<h3>Edit <%= @course.name %></h3>
+
+<form method="POST" action="/courses/<%= course.slug %>">
+  <input type="text" name="course[name]" id="name" value="<%= course.name %>" />
+
+  <p>
+    Current Roster:<br />
+  </p>
+  <ol>
+    <% @course.users.each do |user| %>
+      <% if user.student? %>
+        <li>
+          <input type="text" name="course[students][][name]" value="<%= user.name %>" />
+          <input type="text" name="course[students][][email]" value="<%= user.email %>" />
+          <input type="checkbox" name="course[students][][remove]" id="user_<%= user.id %>">Remove Student from Course</input>
+        </li>
+      <% end %>
+    <% end %>
+  </ol>
+
+  <p>
+    Add New Students to Roster:
+  </p>
+  <ol>
+    <% 5.times do %>
+      <li>
+        <input type="text" name="course[students][][name]" placeholder="Student Name" />
+        <input type="text" name="course[students][][email]" placeholder="Student Email" />
+      </li>
+    <% end %>
+  </ol>
+
+  <p>
+    Assessments
+  </p>
+  <ol>
+    <% @course.assessments.each do |assessment| %>
+      <li>
+        <input type="text" name="course[assessments][][name]" value="<%= assessment.name %>" />
+        <input type="checkbox" name="course[assessments][][delete]" id="assessment_<%= assessment.id %>">Delete Assessment</input>
+      </li>
+    <% end %>
+  </ol>
+
+  <p>
+    Add New Assessments:
+  </p>
+  <ol>
+    <% 5.times do %>
+      <li>
+        <input type="text" name="course[assessments][][name]" value="<%= assessment.name %>" />
+      </li>
+    <% end %>
+  </ol>
+
+  <input type="submit" value="Update Course" />
+</form>

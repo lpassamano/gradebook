@@ -282,7 +282,7 @@ describe "Course Features" do
 
     it 'allows user to change name of course' do
       params = {course: {name: "Photography - New Name"}}
-      post '/courses/#{@course.slug}', params
+      post "/courses/#{@course.slug}", params
       expect(@course.name).to eq("Photography - New Name")
     end
 

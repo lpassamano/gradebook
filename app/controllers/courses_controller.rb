@@ -56,9 +56,10 @@ class CoursesController < ApplicationController
     if !logged_in?
       redirect '/'
     elsif current_user.instructor?
+      @course = Course.find_by_slug(params[:slug])
       erb :"courses/edit"
     else
       redirect '/courses'
-    end 
+    end
   end
 end
