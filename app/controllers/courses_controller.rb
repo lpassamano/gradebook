@@ -43,6 +43,7 @@ class CoursesController < ApplicationController
         user.grades.sort_by {|grade|     grade[:assessment_id]}
       end
     end
+    erb :"courses/show_student_user" if current_user.student?
     erb :"courses/show"
   end
 end
