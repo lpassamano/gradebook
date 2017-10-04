@@ -221,12 +221,21 @@ describe "Course Features" do
       expect(last_response.body).to include("79")
     end
 
-    it 'course show page for student does not have links to edit course or add new assessments' do
-
-    end
-
     it 'only users associated with the course can view the course show page' do
+      new_student = User.create(name: "Gil", email: "gil@email.com", password: "1234")
+      new_student.role = Role.find_or_create_by(name: "Student")
+      new_instructor = User.create(name: "Serge", email: "serge@email.com", password: "1234")
+      new_instructor. role = Role.find_or_create_by(name: "Instructor")
 
+      get '/logout'
+      post '/login', params = {email: "gil@email.com", password: "1234"}
+      get "/courses/#{@course.slug}"
+      expect(last_response.location).to include("/courses")
+
+      get '/logout'
+      post '/login', params = {email: "serge@email.com", password: "1234"}
+      get "/courses/#{@course.slug}"
+      expect(last_response.location).to include("/courses")
     end
   end
 
