@@ -1,7 +1,7 @@
 <h3>Edit <%= @course.name %></h3>
 
 <form method="POST" action="/courses/<%= @course.slug %>">
-  <input type="text" name="course[name]" id="name" value="<%= @course.name %>" />
+  <input id="course_name" type="text" name="course[name]" value="<%= @course.name %>" />
 
   <p>
     Current Roster:<br />
@@ -53,5 +53,5 @@
     <% end %>
   </ol>
 
-  <input type="submit" value="Update Course" />
+  <button type="submit" id="submit">Update Course</button>
 </form>

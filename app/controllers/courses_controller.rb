@@ -65,8 +65,10 @@ class CoursesController < ApplicationController
   end
 
   post '/courses/:slug' do
-    @course = Course.find_by_slug(params[:slug])
-    @course.update(name: params[:course][:name])
+    course = Course.find_by_slug(params[:slug])
+    binding.pry 
+    course.name = params[:course][:name]
+    course.save
     redirect "/courses/#{course.slug}"
   end
 end
