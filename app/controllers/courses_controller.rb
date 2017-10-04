@@ -37,13 +37,16 @@ class CoursesController < ApplicationController
     #binding.pry
     redirect '/' if !logged_in?
     @course = Course.find_by_slug(params[:slug])
-    @course.assessments.sort_by {|assessment| assessment[:id]}
-    @course.users.each do |user|
-      if user.student?
-        user.grades.sort_by {|grade|     grade[:assessment_id]}
+    if current_user.instructor? && current_user.courses.include?(@course)
+      @course.assessments.sort_by {|assessment| assessment[:id]}
+      @course.users.each do |user|
+        if user.student?
+          user.grades.sort_by {|grade|     grade[:assessment_id]}
+        end
       end
-    end
-    erb :"courses/show_student_user" if current_user.student?
-    erb :"courses/show"
+      erb :"courses/show"
+    elsif current_user.student?
+      erb :"courses/show_student_user"
+    end 
   end
 end
