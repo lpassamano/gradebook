@@ -48,6 +48,8 @@ class CoursesController < ApplicationController
       erb :"courses/show"
     elsif current_user.student?
       erb :"courses/show_student_user"
+    else
+      redirect "/courses"
     end
   end
 end
