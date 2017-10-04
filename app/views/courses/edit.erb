@@ -5,14 +5,13 @@
 
   <p>
     Current Roster:<br />
+    <em>Uncheck to remove student from roster.</em>
   </p>
   <ol>
     <% @course.users.each do |user| %>
       <% if user.student? %>
         <li>
-          <input type="text" name="course[students][][name]" value="<%= user.name %>" />
-          <input type="text" name="course[students][][email]" value="<%= user.email %>" />
-          <input type="checkbox" name="course[students][][remove]" id="user_<%= user.id %>">Remove Student from Course</input>
+          <input type="checkbox" name="course[user_ids][]" value="<%= user.id %>" "checked"><%= user.name %></input>
         </li>
       <% end %>
     <% end %>
@@ -24,8 +23,8 @@
   <ol>
     <% 5.times do %>
       <li>
-        <input type="text" name="course[new_students][][name]" placeholder="Student Name" />
-        <input type="text" name="course[new_students][][email]" placeholder="Student Email" />
+        <input type="text" name="course[students][][name]" placeholder="Student Name" />
+        <input type="text" name="course[students][][email]" placeholder="Student Email" />
       </li>
     <% end %>
   </ol>

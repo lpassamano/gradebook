@@ -289,6 +289,29 @@ describe "Course Features" do
     end
 
     it 'allows user to add and remove students' do
+      chaz_id = User.find_by(name: "Chaz").id
+      becky_id = User.find_by(name: "Becky").id
+      params = {
+        course: {
+          name: "Photography",
+          user_ids: [
+            chaz_id
+          ]
+          students: [
+            {
+              name: "Gil",
+              email: "gil@email.com"
+            }
+          ]
+        }
+      }
+
+      post "/courses/#{@course.slug}", params
+      expect(last_response.body).not_to include("Becky")
+      expect(last_response.body).to include("Gil")
+    end
+
+    it 'does not list the instructor in the roster' do
 
     end
 
