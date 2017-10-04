@@ -141,7 +141,7 @@ describe "Course Features" do
       post '/login', params
 
       @course = Course.create(name: "Photography")
-      @becky = User.create(name: "Becky", email: "becky@test.edu", password: "Becky")
+      becky = User.create(name: "Becky", email: "becky@test.edu", password: "Becky")
       becky.role = student
       becky.save
       chaz = User.create(name: "Chaz", email: "chaz@test.edu", password: "Chaz")
@@ -150,7 +150,7 @@ describe "Course Features" do
       report = Assessment.create(name: "Report")
       essay = Assessment.create(name: "Essay")
       exam = Assessment.create(name: "Final Exam")
-      @course.users << [becky, chaz]
+      @course.users << [becky, chaz, user]
       @course.assessments << [report, essay, exam]
       @course.save
       becky_report = Grade.create(score: "75")
@@ -172,7 +172,10 @@ describe "Course Features" do
     end
 
     it 'displays the course name, student roster, assigments, and student grades' do
+      params = {email: "leigh@leigh.com", password: "1234"}
+      post '/login', params
       get "/courses/#{@course.slug}"
+
       expect(last_response.body).to include("Photography")
       expect(last_response.body).to include("Becky")
       expect(last_response.body).to include("Essay")
@@ -186,11 +189,15 @@ describe "Course Features" do
     end
 
     it 'has a link to edit the course information' do
+      params = {email: "leigh@leigh.com", password: "1234"}
+      post '/login', params
       get "/courses/#{@course.slug}"
       expect(last_response.body).to include("<a href=\"/courses/#{@course.slug}/edit\"")
     end
 
     it 'has a link to add assessment form' do
+      params = {email: "leigh@leigh.com", password: "1234"}
+      post '/login', params
       get "/courses/#{@course.slug}"
       expect(last_response.body).to include("<a href=\"/courses/#{@course.slug}/new\"")
     end
