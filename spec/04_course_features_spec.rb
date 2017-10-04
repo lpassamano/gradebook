@@ -316,7 +316,22 @@ describe "Course Features" do
     end
 
     it 'allows user to add and remove assessments' do
-
+      report_id = Course.find_by(name: "Report")
+      params = {
+        course: {
+          name: "Photography",
+          user_ids: [],
+          students: [],
+          assessment_ids: [
+            report_id
+          ],
+          assessments: [
+            name: "Dark Room Quiz"
+          ]
+        }
+      }
+      post "/courses/#{@course.slug}", params
+      expect(@course.assessments.count).to eq()
     end
 
     it 'allows user to delete the course' do
