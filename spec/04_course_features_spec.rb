@@ -285,6 +285,7 @@ describe "Course Features" do
 
       #params = {course: {name: "Photography - New Name"}}
       #post "/courses/#{@course.slug}", params
+      #get "/courses/#{@course.slug}"
       #expect(last_response.body).to include("Photography - New Name")
     end
 
@@ -349,6 +350,7 @@ describe "Course Features" do
       params = {email: "test@test.com", password: "1234"}
       post '/login', params
       get "/courses/#{@course.slug}/edit"
+      expect(last_response.location).to include("/")
     end
   end
 end
