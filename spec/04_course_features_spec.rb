@@ -281,13 +281,9 @@ describe "Course Features" do
     end
 
     it 'allows user to change name of course' do
-      params = {email: "leigh@leigh.com", password: "1234"}
-      post '/login', params
-      visit "/courses/#{@course.slug}"
-      fill_in(:course_name, :with => "Photography - New Name")
-      click_button 'submit'
-
-      expect(@course.name).to eq("Photography - New Name")
+      params = {course: {name: "Photography - New Name"}}
+      post "/courses/#{@course.slug}", params
+      expect(last_response.body).to include("Photography - New Name")
     end
 
     it 'allows user to add and remove students' do
