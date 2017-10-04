@@ -18,6 +18,7 @@ class CoursesController < ApplicationController
 
   post '/courses' do
     course = Course.create(name: params[:course][:name])
+    course.users << current_user
     students = params[:course][:students].each do |student|
       #binding.pry
       if student[:name] != "" && student[:email] != ""
@@ -41,7 +42,7 @@ class CoursesController < ApplicationController
       @course.assessments.sort_by {|assessment| assessment[:id]}
       @course.users.each do |user|
         if user.student?
-          user.grades.sort_by {|grade|     grade[:assessment_id]}
+          user.grades.sort_by {|grade| grade[:assessment_id]}
         end
       end
       erb :"courses/show"
@@ -61,5 +62,11 @@ class CoursesController < ApplicationController
     else
       redirect '/courses'
     end
+  end
+
+  post '/courses/:slug' do
+    @course = Course.find_by_slug(params[:slug])
+    @course.update(name: params[:course][:name])
+    redirect "/courses/#{course.slug}"
   end
 end

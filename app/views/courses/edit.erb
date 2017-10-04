@@ -1,7 +1,7 @@
 <h3>Edit <%= @course.name %></h3>
 
-<form method="POST" action="/courses/<%= course.slug %>">
-  <input type="text" name="course[name]" id="name" value="<%= course.name %>" />
+<form method="POST" action="/courses/<%= @course.slug %>">
+  <input type="text" name="course[name]" id="name" value="<%= @course.name %>" />
 
   <p>
     Current Roster:<br />
@@ -24,14 +24,14 @@
   <ol>
     <% 5.times do %>
       <li>
-        <input type="text" name="course[students][][name]" placeholder="Student Name" />
-        <input type="text" name="course[students][][email]" placeholder="Student Email" />
+        <input type="text" name="course[new_students][][name]" placeholder="Student Name" />
+        <input type="text" name="course[new_students][][email]" placeholder="Student Email" />
       </li>
     <% end %>
   </ol>
 
   <p>
-    Assessments
+    Assessments:
   </p>
   <ol>
     <% @course.assessments.each do |assessment| %>
@@ -48,7 +48,7 @@
   <ol>
     <% 5.times do %>
       <li>
-        <input type="text" name="course[assessments][][name]" value="<%= assessment.name %>" />
+        <input type="text" name="course[assessments][][name]" />
       </li>
     <% end %>
   </ol>
