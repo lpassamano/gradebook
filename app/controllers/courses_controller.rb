@@ -17,6 +17,7 @@ class CoursesController < ApplicationController
   end
 
   post '/courses' do
+    #simplify this when refactoring -- look at form labels
     course = Course.create(name: params[:course][:name])
     course.users << current_user
     params[:course][:students].each do |student|
@@ -65,11 +66,16 @@ class CoursesController < ApplicationController
   end
 
   post '/courses/:slug' do
+    #simplify this when refactoring
     course = Course.find_by_slug(params[:slug])
     course.name = params[:course][:name]
+    #binding.pry
     course.user_ids = params[:course][:user_ids]
     course.users << current_user
+    course.assessment_ids = params[:course][:assessment_ids]
+    course.assessments << params[:course][:assessments]
     course.save
+    #binding.pry
     params[:course][:students].each do |student|
       #binding.pry
       if student[:name] != "" && student[:email] != ""

@@ -289,13 +289,11 @@ describe "Course Features" do
     end
 
     it 'allows user to add and remove students' do
-      chaz_id = User.find_by(name: "Chaz").id
-      becky_id = User.find_by(name: "Becky").id
       params = {
         course: {
           name: "Photography",
           user_ids: [
-            chaz_id
+            3
           ],
           students: [
             {
@@ -316,14 +314,16 @@ describe "Course Features" do
     end
 
     it 'allows user to add and remove assessments' do
-      report_id = Course.find_by(name: "Report")
       params = {
         course: {
           name: "Photography",
-          user_ids: [],
+          user_ids: [
+            2,
+            3
+          ],
           students: [],
           assessment_ids: [
-            report_id
+            1
           ],
           assessments: [
             name: "Dark Room Quiz"
@@ -331,7 +331,7 @@ describe "Course Features" do
         }
       }
       post "/courses/#{@course.slug}", params
-      expect(@course.assessments.count).to eq()
+      expect(@course.assessments.count).to eq(2)
     end
 
     it 'allows user to delete the course' do
