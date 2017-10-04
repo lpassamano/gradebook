@@ -73,7 +73,9 @@ class CoursesController < ApplicationController
     course.user_ids = params[:course][:user_ids]
     course.users << current_user
     course.assessment_ids = params[:course][:assessment_ids]
-    course.assessments << params[:course][:assessments]
+    params[:course][:assessments].each do |assessment|
+      course.assessments << Assessment.create(assessment)
+    end
     course.save
     #binding.pry
     params[:course][:students].each do |student|
@@ -89,6 +91,7 @@ class CoursesController < ApplicationController
         #binding.pry
       end
     end
+    #binding.pry
     redirect "/courses/#{course.slug}"
   end
 end

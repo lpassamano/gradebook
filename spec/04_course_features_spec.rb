@@ -289,11 +289,12 @@ describe "Course Features" do
     end
 
     it 'allows user to add and remove students' do
+      chaz_id = User.find_by(name: "Chaz").id
       params = {
         course: {
           name: "Photography",
           user_ids: [
-            3
+            chaz_id
           ],
           students: [
             {
@@ -305,7 +306,8 @@ describe "Course Features" do
       }
 
       post "/courses/#{@course.slug}", params
-      expect(@course.users.count).to eq(3)
+      get "/courses/#{@course.slug}"
+      expect(@course.users.count).to eq(2)
     end
 
     it 'does not list the instructor in the roster' do
