@@ -7,7 +7,6 @@ class CoursesController < ApplicationController
   end
 
   get '/courses/new' do
-    #binding.pry
     if !logged_in?
       redirect '/'
     elsif current_user.instructor?
@@ -51,5 +50,15 @@ class CoursesController < ApplicationController
     else
       redirect "/courses"
     end
+  end
+
+  get '/courses/:slug/edit' do
+    if !logged_in?
+      redirect '/'
+    elsif current_user.instructor?
+      erb :"courses/edit"
+    else
+      redirect '/courses'
+    end 
   end
 end

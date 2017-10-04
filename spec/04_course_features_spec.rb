@@ -259,7 +259,7 @@ describe "Course Features" do
       report = Assessment.create(name: "Report")
       essay = Assessment.create(name: "Essay")
       exam = Assessment.create(name: "Final Exam")
-      @course.users << [becky, chaz]
+      @course.users << [becky, chaz, user]
       @course.assessments << [report, essay, exam]
       @course.save
       becky_report = Grade.create(score: "75")
