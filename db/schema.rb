@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171001201110) do
+ActiveRecord::Schema.define(version: 20171005010608) do
 
   create_table "assessments", force: :cascade do |t|
     t.string "name"
@@ -22,7 +22,7 @@ ActiveRecord::Schema.define(version: 20171001201110) do
   end
 
   create_table "grades", force: :cascade do |t|
-    t.string "score"
+    t.string "score", default: "-"
     t.string "comment"
     t.integer "assessment_id"
     t.integer "user_id"
