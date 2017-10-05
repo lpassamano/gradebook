@@ -1,0 +1,43 @@
+<h3><%= @course.name %></h3>
+
+<form>
+  <table>
+    <thead>
+      <tr>
+        <th>
+          Students
+        </th>
+        <% @course.assessments.each do |assessment| %>
+        <th>
+          <a href="/courses/<%= @course.slug %>/<%= assessment.slug %>">
+            <%= assessment.name %>
+          </a>
+        </th>
+        <% end %>
+      </tr>
+    </thead>
+    <tbody>
+      <% @course.users.each do |user| %>
+        <% if user.student? %>
+          <tr>
+            <td>
+              <%= user.name %>
+            </td>
+              <% user.grades.each do |grade| %>
+            <td>
+              <input type="text" name="user_<%= user.id %>[grades][][score]" value="<%= grade.score %>"/><br />
+              <input type="text" name="user_<%= user.id %>[grades][][comment]"
+                <% if grade.comment != "" %>
+                  value="<%= grade.comment %>"
+                <% else %>
+                  placeholder="Comment"
+                <% end %>/>
+            </td>
+          <% end %>
+        <% end %>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+</form>
