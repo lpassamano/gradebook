@@ -111,6 +111,10 @@ class CoursesController < ApplicationController
     end
   end
 
+  patch '/courses/:slug' do
+    #add in code for updating grades 
+  end
+
   delete '/courses/:slug/delete' do
     @course = Course.find_by_slug(params[:slug])
     if !logged_in?
