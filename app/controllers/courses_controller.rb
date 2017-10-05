@@ -77,7 +77,7 @@ class CoursesController < ApplicationController
     course.assessment_ids = params[:course][:assessment_ids]
     params[:course][:assessments].each do |assessment|
       #need to make sure grades are added for each student for new assessment
-      course.assessments << Assessment.create(assessment)
+      course.assessments << Assessment.create(assessment) if assessment[:name] != ""
     end
     course.save
     params[:course][:students].each do |student|
