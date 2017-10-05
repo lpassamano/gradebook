@@ -32,7 +32,7 @@ class CoursesController < ApplicationController
     end
     params[:course][:assessments].each do |assessment|
       #add grade for each student per assessment
-      course.assessments << Assessment.create(assessment)
+      course.assessments << Assessment.create(assessment) if assessment[:name] != ""
     end
     redirect "/courses/#{course.slug}"
   end
