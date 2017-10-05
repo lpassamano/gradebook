@@ -21,8 +21,8 @@ class CoursesController < ApplicationController
     course = Course.create(name: params[:course][:name])
     course.users << current_user
     params[:course][:students].each do |student|
-      #binding.pry
       if student[:name] != "" && student[:email] != ""
+        #need to make sure new grades are created for each student as they are added
         s = User.new(name: student[:name], email: student[:email])
         s.password = s.name
         s.save
@@ -69,29 +69,25 @@ class CoursesController < ApplicationController
     #simplify this when refactoring
     course = Course.find_by_slug(params[:slug])
     course.name = params[:course][:name]
-    #binding.pry
     course.user_ids = params[:course][:user_ids]
     course.users << current_user
     course.assessment_ids = params[:course][:assessment_ids]
     params[:course][:assessments].each do |assessment|
+      #need to make sure grades are added for each student for new assessment
       course.assessments << Assessment.create(assessment)
     end
     course.save
-    #binding.pry
     params[:course][:students].each do |student|
-      #binding.pry
       if student[:name] != "" && student[:email] != ""
-        #binding.pry
+        #new grades for each course assessment need to be created for each new student
         s = User.new(name: student[:name], email: student[:email])
         s.password = s.name
         s.save
         s.role = Role.find_or_create_by(name: "Student")
         course.users << s
         course.save
-        #binding.pry
       end
     end
-    #binding.pry
     redirect "/courses/#{course.slug}"
   end
 end
