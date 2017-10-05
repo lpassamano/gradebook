@@ -98,7 +98,7 @@ class CoursesController < ApplicationController
     @course = Course.find_by_slug(params[:slug])
     if !logged_in?
       redirect "/"
-    if current_user.instructor? && current_user.courses.include?(@course)
+    elsif current_user.instructor? && current_user.courses.include?(@course)
       @course.assessments.sort_by {|assessment| assessment[:id]}
       @course.users.each do |user|
         if user.student?

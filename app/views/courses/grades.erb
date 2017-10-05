@@ -1,6 +1,7 @@
 <h3><%= @course.name %></h3>
 
-<form>
+<form method="post" action="/courses/<%= @course.slug %>">
+  <input type="hidden" id="hidden" name="_method" value="_patch" />
   <table>
     <thead>
       <tr>
@@ -25,13 +26,9 @@
             </td>
               <% user.grades.each do |grade| %>
             <td>
-              <input type="text" name="user_<%= user.id %>[grades][][score]" value="<%= grade.score %>"/><br />
-              <input type="text" name="user_<%= user.id %>[grades][][comment]"
-                <% if grade.comment != "" %>
-                  value="<%= grade.comment %>"
-                <% else %>
-                  placeholder="Comment"
-                <% end %>/>
+              <input type="number" name="user_<%= user.id %>[grades][][score]" value="<%= grade.score %>"/><br />
+              <!-- make this so it shows comment if there is one -->
+              <input type="text" name="user_<%= user.id %>[grades][][comment]" placeholder="Comment" />
             </td>
           <% end %>
         <% end %>
@@ -39,5 +36,5 @@
       <% end %>
     </tbody>
   </table>
-
+  <button type="submit">Update Grades</button>
 </form>
