@@ -98,8 +98,8 @@ class CoursesController < ApplicationController
     if !logged_in?
       redirect "/"
     elsif current_user.instructor?
-      course = Course.find_by_slug(params[:slug])
-      course.delete
+      @course = Course.find_by_slug(params[:slug])
+      @course.delete
       erb :"courses/delete"
     else
       redirect "/courses"
