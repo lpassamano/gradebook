@@ -25,7 +25,7 @@ pl = Course.create(name: "Powerlifting")
 physics.users << [chaz, leigh, gil, obi, ww, hermoine]
 food.users << [serge, leigh, gil, obi, brian, ron, harry, hermoine]
 astro.users << [jessie, obi, gil, ww, marty, hermoine]
-pl.users << [jessie, obi, chaz, gil, ww, harry, ron]
+pl.users << [jessie, obi, gil, ww, harry, ron]
 
 physics_assessments = [
   "Lab 1",
