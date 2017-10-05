@@ -1,9 +1,5 @@
 <h3>Your Courses</h3>
 
-<%= @user.name %>
-<%= @user.email %>
-<%= @user.role.name %>
-
 <ul>
   <% @user.courses.each do |course| %>
     <li>
