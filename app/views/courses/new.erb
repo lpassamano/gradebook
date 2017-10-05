@@ -14,5 +14,16 @@
       </li>
     <% end %>
   </ol>
+
+  <p>
+    Course Assessments:<br />
+  </p>
+  <ol>
+    <% 15.times do %>
+      <li>
+        <input type="text" name="course[assessments][][name]" placeholder="Name" />
+      </li>
+    <% end %>
+  </ol>
   <input type="submit" value="Add Course" />
 </form>
