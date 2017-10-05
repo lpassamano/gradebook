@@ -58,10 +58,10 @@ class CoursesController < ApplicationController
   end
 
   get '/courses/:slug/edit' do
+    @course = Course.find_by_slug(params[:slug])
     if !logged_in?
       redirect '/'
-    elsif current_user.instructor?
-      @course = Course.find_by_slug(params[:slug])
+    elsif current_user.instructor? && current_user.courses.include?(@course)
       erb :"courses/edit"
     else
       redirect '/courses'
@@ -112,10 +112,10 @@ class CoursesController < ApplicationController
   end
 
   delete '/courses/:slug/delete' do
+    @course = Course.find_by_slug(params[:slug])
     if !logged_in?
       redirect "/"
-    elsif current_user.instructor?
-      @course = Course.find_by_slug(params[:slug])
+    elsif current_user.instructor? && current_user.courses.include?(@course)
       @course.delete
       erb :"courses/delete"
     else
