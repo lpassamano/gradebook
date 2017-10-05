@@ -93,4 +93,14 @@ class CoursesController < ApplicationController
     end
     redirect "/courses/#{course.slug}"
   end
+
+  get '/courses/:slug/delete' do
+    if !logged_in?
+      redirect "/"
+    elsif current_user.instructor?
+      erb :"courses/delete"
+    else
+      redirect "/courses"
+    end
+  end
 end
