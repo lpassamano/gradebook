@@ -22,7 +22,6 @@ class CoursesController < ApplicationController
     course.users << current_user
     params[:course][:students].each do |student|
       if student[:name] != "" && student[:email] != ""
-        #need to make sure new grades are created for each student as they are added
         s = User.new(name: student[:name], email: student[:email])
         s.password = s.name
         s.save
@@ -30,6 +29,10 @@ class CoursesController < ApplicationController
         course.users << s
         course.save
       end
+    end
+    params[:course][:assessments].each do |assessment|
+      #add grade for each student per assessment
+      course.assessments << Assessment.create(assessment)
     end
     redirect "/courses/#{course.slug}"
   end
