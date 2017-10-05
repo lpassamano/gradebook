@@ -94,6 +94,23 @@ class CoursesController < ApplicationController
     redirect "/courses/#{course.slug}"
   end
 
+  get '/courses/:slug/grades' do
+    @course = Course.find_by_slug(params[:slug])
+    if !logged_in?
+      redirect "/"
+    if current_user.instructor? && current_user.courses.include?(@course)
+      @course.assessments.sort_by {|assessment| assessment[:id]}
+      @course.users.each do |user|
+        if user.student?
+          user.grades.sort_by {|grade| grade[:assessment_id]}
+        end
+      end
+      erb :"courses/grades"
+    else
+      redirect "/courses"
+    end
+  end
+
   delete '/courses/:slug/delete' do
     if !logged_in?
       redirect "/"
