@@ -20,7 +20,6 @@ class CoursesController < ApplicationController
     #simplify this when refactoring -- look at form labels
     #binding.pry
     course = Course.create(name: params[:course][:name], user_ids: params[:course][:user_ids])
-    #course.users << current_user
     #students = params[:course][:users].collect do |student|
     #  if student[:name] != "" && student[:email] != ""
     #    s = User.new(student)
