@@ -26,7 +26,6 @@ class CoursesController < ApplicationController
         s = User.new(student)
         s.password = s.name
         s.save
-        s.role = Role.find_or_create_by(name: "Student")
         course.users << s
         s
       end
