@@ -21,10 +21,13 @@ class CoursesController < ApplicationController
     #binding.pry
     course = Course.create(params[:course])
     student_users = params[:users].collect do |user|
-      u = User.new(user)
-      u.password = u.name
-      u.save
-      u
+      if user[:name] != "" && user[:email] != ""
+        u = User.new(user)
+        u.password = u.name
+        u.save
+        u
+      end
+      #this if statement needs to return new instance of user
     end
     course.users << student_users
     #students = params[:course][:users].collect do |student|
