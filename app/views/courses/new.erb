@@ -2,6 +2,7 @@
 
 <form method="POST" action="/courses">
   <input type="text" name="course[name]" id="name" placeholder="Course Name" />
+  <input type="hidden" id="hidden" name="course[user_ids][]" value="<%= current_user.id %>" />
   <p>
     Course Roster:<br />
     <em>maximum 15 students</em>
@@ -11,7 +12,7 @@
       <li>
         <input type="text" name="course[users][][name]" placeholder="Student Name" />
         <input type="text" name="course[users][][email]" placeholder="Student Email" />
-        <input type="hidden" id="hidden" name="course[users][][role_id][<%= Role.find_or_create_by(name: "Student") %>]"
+        <input type="hidden" id="hidden" name="course[users][][role_id]" value="<%= Role.find_or_create_by(name: "Student").id %>" />
       </li>
     <% end %>
   </ol>

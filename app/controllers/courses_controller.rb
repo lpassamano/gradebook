@@ -18,28 +18,28 @@ class CoursesController < ApplicationController
 
   post '/courses' do
     #simplify this when refactoring -- look at form labels
-    course = Course.create(name: params[:course][:name])
-    course.users << current_user
-    students = params[:course][:students].collect do |student|
-      binding.pry
-      if student[:name] != "" && student[:email] != ""
-        s = User.new(student)
-        s.password = s.name
-        s.save
-        course.users << s
-        s
-      end
-    end
-    params[:course][:assessments].each do |assessment|
-      #add grade for each student per assessment
-      a = Assessment.create(assessment) if assessment[:name] != ""
-      course.assessments << a
-      students.each do |student|
-        grade = Grade.create
-        student.grades << grade
-        a.grades << grade
-      end
-    end
+    #binding.pry
+    course = Course.create(name: params[:course][:name], user_ids: params[:course][:user_ids])
+    #course.users << current_user
+    #students = params[:course][:users].collect do |student|
+    #  if student[:name] != "" && student[:email] != ""
+    #    s = User.new(student)
+    #    s.password = s.name
+    #    s.save
+    #    course.users << s
+    #    s
+    #  end
+    #end
+    #params[:course][:assessments].each do |assessment|
+    #  #add grade for each student per assessment
+    #  a = Assessment.create(assessment) if assessment[:name] != ""
+    #  course.assessments << a
+    #  students.each do |student|
+    #    grade = Grade.create
+    #    student.grades << grade
+    #    a.grades << grade
+    #  end
+    #end
     redirect "/courses/#{course.slug}"
   end
 
