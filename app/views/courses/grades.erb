@@ -1,7 +1,6 @@
 <h3><%= @course.name %></h3>
 
-<form method="post" action="/courses/<%= @course.slug %>">
-  <input type="hidden" id="hidden" name="_method" value="_patch" />
+<form method="post" action="/courses/<%= @course.slug %>/grades">
   <table>
     <thead>
       <tr>
@@ -25,14 +24,14 @@
               <%= user.name %>
             </td>
               <% user.grades.each do |grade| %>
-            <td>
-              <input type="number" name="user_<%= user.id %>[grades][][score]" value="<%= grade.score %>"/><br />
-              <!-- make this so it shows comment if there is one -->
-              <input type="text" name="user_<%= user.id %>[grades][][comment]" placeholder="Comment" />
-            </td>
-          <% end %>
-        <% end %>
-      </tr>
+                <td>
+                  <input type="number" name="grade_ids[<%= grade.id %>][score]" value="<%= grade.score %>"/><br />
+                  <!-- make this so it shows comment if there is one -->
+                  <input type="text" name="grade_ids[<%= grade.id %>][comment]" placeholder="<%= grade.comment %>" />
+                </td>
+              <% end %>
+            <% end %>
+          </tr>
       <% end %>
     </tbody>
   </table>

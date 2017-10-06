@@ -8,9 +8,9 @@
       </th>
       <% @course.assessments.each do |assessment| %>
       <th>
-        <a href="/courses/<%= @course.slug %>/<%= assessment.slug %>">
+        <!--<a href="/courses/<%= @course.slug %>/<%= assessment.slug %>">-->
           <%= assessment.name %>
-        </a>
+        <!--</a> are links to individual assessment pages necessary? -->
       </th>
       <% end %>
     </tr>

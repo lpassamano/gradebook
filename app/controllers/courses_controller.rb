@@ -23,7 +23,7 @@ class CoursesController < ApplicationController
     students = params[:course][:students].collect do |student|
       binding.pry
       if student[:name] != "" && student[:email] != ""
-        s = User.new(name: student[:name], email: student[:email])
+        s = User.new(student)
         s.password = s.name
         s.save
         s.role = Role.find_or_create_by(name: "Student")
