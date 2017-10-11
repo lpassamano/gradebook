@@ -17,8 +17,6 @@ class CoursesController < ApplicationController
   end
 
   post '/courses' do
-    #simplify this when refactoring -- look at form labels
-    #binding.pry
     course = Course.create(params[:course])
     params[:users].collect do |user|
       if user[:name] != "" && user[:email] != ""
@@ -31,7 +29,6 @@ class CoursesController < ApplicationController
         end
       end
     end
-
     params[:assessments].each do |assessment|
       if assessment[:name] != ""
         a = Assessment.create(assessment)
@@ -49,10 +46,8 @@ class CoursesController < ApplicationController
   end
 
   get '/courses/:slug' do
-    #binding.pry
     redirect '/' if !logged_in?
     @course = Course.find_by_slug(params[:slug])
-    #binding.pry
     if current_user.instructor? && current_user.courses.include?(@course)
       @course.assessments.sort_by {|assessment| assessment[:id]}
       @course.users.each do |user|
