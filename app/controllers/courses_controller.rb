@@ -20,12 +20,15 @@ class CoursesController < ApplicationController
     #simplify this when refactoring -- look at form labels
     #binding.pry
     course = Course.create(params[:course])
-    student_users = params[:users].collect do |user|
+    params[:users].collect do |user|
       if user[:name] != "" && user[:email] != ""
-        u = User.new(user)
-        u.password = u.name
-        u.save
-        u
+        if u = User.find_by(email: user[:email])
+          u.courses << course unless u.instructor?
+        else u = User.new(user)
+          u.password = u.name
+          u.save
+          u.courses << course
+        end
       end
       #this if statement needs to return new instance of user
     end
