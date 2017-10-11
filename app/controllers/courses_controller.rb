@@ -77,6 +77,13 @@ class CoursesController < ApplicationController
   post '/courses/:slug' do
     #simplify this when refactoring
     course = Course.find_by_slug(params[:slug])
+    if params[:course][:assessment_ids] == nil
+      removed_assmnts = course.assessment_ids
+    else
+      removed_assmnts = course.assessment_ids.find_all do |id|
+        !params[:course][:assessment_ids].include?(id.to_s)
+      end
+    end
     course.update(params[:course])
     params[:users].collect do |user|
       if user[:name] != "" && user[:email] != ""
@@ -112,8 +119,7 @@ class CoursesController < ApplicationController
         end
       end
     end
-
-      #when assessments are removed their grades need to also be removed
+      #when assessments are removed their grades need to also be removed from student class
     redirect "/courses/#{course.slug}"
   end
 
