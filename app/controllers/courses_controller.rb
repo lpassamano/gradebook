@@ -119,7 +119,13 @@ class CoursesController < ApplicationController
         end
       end
     end
-      #when assessments are removed their grades need to also be removed from student class
+    course.users.each do |user|
+      if user.student?
+        user.grades.each do |grade|
+          #delete grade if its assessment_id is in removed_assmnts
+        end
+      end
+    end
     redirect "/courses/#{course.slug}"
   end
 
