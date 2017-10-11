@@ -2,7 +2,7 @@ To do:
 
 1. build out student views
     -special sign up page with courses found w/ that email
-    -
+    -add instructor name & email to course show page
 
 1.5. when adding students to courses change it to #find_or_create_by(:email)
 
