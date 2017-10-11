@@ -30,18 +30,7 @@ class CoursesController < ApplicationController
           u.courses << course
         end
       end
-      #this if statement needs to return new instance of user
     end
-    course.users << student_users
-    #students = params[:course][:users].collect do |student|
-    #  if student[:name] != "" && student[:email] != ""
-    #    s = User.new(student)
-    #    s.password = s.name
-    #    s.save
-    #    course.users << s
-    #    s
-    #  end
-    #end
     #params[:course][:assessments].each do |assessment|
     #  #add grade for each student per assessment
     #  a = Assessment.create(assessment) if assessment[:name] != ""
