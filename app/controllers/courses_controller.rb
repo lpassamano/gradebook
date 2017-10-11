@@ -77,27 +77,25 @@ class CoursesController < ApplicationController
   post '/courses/:slug' do
     #simplify this when refactoring
     course = Course.find_by_slug(params[:slug])
-    course.name = params[:course][:name]
-    course.user_ids = params[:course][:user_ids]
-    course.users << current_user
-    course.assessment_ids = params[:course][:assessment_ids]
-    #when assessments are removed their grades need to also be removed
-    params[:course][:assessments].each do |assessment|
+    course.update(params[:course])
+
+      #when assessments are removed their grades need to also be removed
+    #params[:course][:assessments].each do |assessment|
       #need to make sure grades are added for each student for new assessment
-      course.assessments << Assessment.create(assessment) if assessment[:name] != ""
-    end
-    course.save
-    params[:course][:students].each do |student|
-      if student[:name] != "" && student[:email] != ""
+      #course.assessments << Assessment.create(assessment) if assessment[:name] != ""
+    #end
+    #course.save
+    #params[:course][:students].each do |student|
+      #if student[:name] != "" && student[:email] != ""
         #new grades for each course assessment need to be created for each new student
-        s = User.new(name: student[:name], email: student[:email])
-        s.password = s.name
-        s.save
-        s.role = Role.find_or_create_by(name: "Student")
-        course.users << s
-        course.save
-      end
-    end
+        #s = User.new(name: student[:name], email: student[:email])
+        #s.password = s.name
+        #s.save
+        #s.role = Role.find_or_create_by(name: "Student")
+        #course.users << s
+        #course.save
+      #end
+    #end
     redirect "/courses/#{course.slug}"
   end
 

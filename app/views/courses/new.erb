@@ -2,6 +2,7 @@
 
 <form method="POST" action="/courses">
   <input type="text" name="course[name]" id="name" placeholder="Course Name" />
+  <!-- hidden box is to add instructor's id to user list -->
   <input type="hidden" id="hidden" name="course[user_ids][]" value="<%= current_user.id %>" />
   <p>
     Course Roster:<br />
