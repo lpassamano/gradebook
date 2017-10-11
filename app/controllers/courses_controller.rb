@@ -78,24 +78,42 @@ class CoursesController < ApplicationController
     #simplify this when refactoring
     course = Course.find_by_slug(params[:slug])
     course.update(params[:course])
+    params[:users].collect do |user|
+      if user[:name] != "" && user[:email] != ""
+        if u = User.find_by(email: user[:email]) && u.student?
+          u.courses << course
+          course.assessments.each do |assessment|
+            grade = Grade.create
+            u.grades << grade
+            assessment.grades << grade
+          end
+        else u = User.new(user)
+          u.password = u.name
+          u.save
+          u.courses << course
+          course.assessments.each do |assessment|
+            grade = Grade.create
+            u.grades << grade
+            assessment.grades << grade
+          end
+        end
+      end
+    end
+    params[:assessments].each do |assessment|
+      if assessment[:name] != ""
+        a = Assessment.create(assessment)
+        course.assessments << a
+        course.users.each do |user|
+          if user.student?
+            grade = Grade.create
+            user.grades << grade
+            a.grades << grade
+          end
+        end
+      end
+    end
 
       #when assessments are removed their grades need to also be removed
-    #params[:course][:assessments].each do |assessment|
-      #need to make sure grades are added for each student for new assessment
-      #course.assessments << Assessment.create(assessment) if assessment[:name] != ""
-    #end
-    #course.save
-    #params[:course][:students].each do |student|
-      #if student[:name] != "" && student[:email] != ""
-        #new grades for each course assessment need to be created for each new student
-        #s = User.new(name: student[:name], email: student[:email])
-        #s.password = s.name
-        #s.save
-        #s.role = Role.find_or_create_by(name: "Student")
-        #course.users << s
-        #course.save
-      #end
-    #end
     redirect "/courses/#{course.slug}"
   end
 
