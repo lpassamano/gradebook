@@ -18,7 +18,7 @@ class CoursesController < ApplicationController
 
   post '/courses' do
     #simplify this when refactoring -- look at form labels
-    #binding.pry
+    binding.pry
     course = Course.create(params[:course])
     params[:users].collect do |user|
       if user[:name] != "" && user[:email] != ""
@@ -31,16 +31,20 @@ class CoursesController < ApplicationController
         end
       end
     end
-    #params[:course][:assessments].each do |assessment|
-    #  #add grade for each student per assessment
-    #  a = Assessment.create(assessment) if assessment[:name] != ""
-    #  course.assessments << a
-    #  students.each do |student|
-    #    grade = Grade.create
-    #    student.grades << grade
-    #    a.grades << grade
-    #  end
-    #end
+
+    params[:assessments].each do |assessment|
+      if assessment[:name] != ""
+        a = Assessment.create(assessment)
+        course.assessments << a
+        course.users.each do |user|
+          if user.student?
+            grade = Grade.create
+            user.grades << grade
+            a.grades << grade
+          end
+        end
+      end
+    end
     redirect "/courses/#{course.slug}"
   end
 
