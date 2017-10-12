@@ -1,14 +1,9 @@
-<h3>Welcome <%= @user.name %></h3>
-
-display list of courses that the student has been enrolled in (if any)
-
-and display list of courses that they can enroll in
+<h3>Enroll in courses:</h3>
 
 <form method="post" action="/courses">
   <input type="hidden" name="hidden" id="_method" value="PATCH"/>
   <p>
-    Enroll in courses: <br />
-    <em>You were pre-enrolled by your instructor for any checkmarked courses, uncheck to drop the course</em>
+    <em>Check to enroll and uncheck to drop course.</em>
   </p>
   <ol>
     <% Course.all.each do |course| %>

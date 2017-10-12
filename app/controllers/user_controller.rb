@@ -16,7 +16,7 @@ class UserController < ApplicationController
         if @user.authenticate(@user.name)
           @user.password = params[:password]
           session[:user_id] = @user.id
-          erb :"user/new_student"
+          redirect "/courses"
         end
       elsif User.find_by(email: params[:email])
         #add flash message saying account already created w/ this email
@@ -25,7 +25,7 @@ class UserController < ApplicationController
         user = User.new(params)
         if user.save && params[:name] != "" && params[:email] != ""
           session[:user_id] = user.id
-          erb :"user/new_student"
+          redirect "/courses"
         else
             #add flash error message later
           redirect "/signup"
