@@ -1,14 +1,13 @@
 <h3>Enroll in courses:</h3>
 
-<form method="post" action="/courses">
-  <input type="hidden" name="hidden" id="_method" value="PATCH"/>
+<form method="post" action="/courses/register">
   <p>
     <em>Check to enroll and uncheck to drop course.</em>
   </p>
   <ol>
     <% Course.all.each do |course| %>
       <li>
-        <input type="checkbox" name="course_ids[]" value="<%= course.id %>"<%= 'checked' if @user.course_ids.include?(course.id) %>><%= course.name %></input>
+        <input type="checkbox" name="course_ids[]" value="<%= course.id %>" <%= 'checked' if current_user.course_ids.include?(course.id) %>><%= course.name %></input>
       </li>
     <% end %>
   </ol>

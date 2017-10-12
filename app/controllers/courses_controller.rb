@@ -16,11 +16,6 @@ class CoursesController < ApplicationController
     end
   end
 
-  patch '/courses' do
-    @user = current_user
-
-  end
-
   post '/courses' do
     course = Course.create(params[:course])
     params[:users].collect do |user|
@@ -48,6 +43,20 @@ class CoursesController < ApplicationController
       end
     end
     redirect "/courses/#{course.slug}"
+  end
+
+  get '/courses/register' do
+    redirect '/' if !logged_in?
+    if current_user.student?
+      erb :"courses/register"
+    else
+      redirect "/courses"
+    end
+  end
+
+  post '/courses/register' do
+    current_user.update(params)
+    redirect "/courses"
   end
 
   get '/courses/:slug' do
