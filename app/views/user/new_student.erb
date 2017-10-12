@@ -3,3 +3,19 @@
 display list of courses that the student has been enrolled in (if any)
 
 and display list of courses that they can enroll in
+
+<form method="post" action="/courses">
+  <input type="hidden" name="hidden" id="_method" value="PATCH"/>
+  <p>
+    Enroll in courses: <br />
+    <em>You were pre-enrolled by your instructor for any checkmarked courses, uncheck to drop the course</em>
+  </p>
+  <ol>
+    <% Course.all.each do |course| %>
+      <li>
+        <input type="checkbox" name="course_ids[]" value="<%= course.id %>"<%= 'checked' if @user.course_ids.include?(course.id) %>><%= course.name %></input>
+      </li>
+    <% end %>
+  </ol>
+  <button type="submit" id="submit">Update Course Registration</button>
+</form>

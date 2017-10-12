@@ -16,6 +16,11 @@ class CoursesController < ApplicationController
     end
   end
 
+  patch '/courses' do
+    @user = current_user
+
+  end
+
   post '/courses' do
     course = Course.create(params[:course])
     params[:users].collect do |user|

@@ -10,11 +10,14 @@ class UserController < ApplicationController
   end
 
   post '/signup' do
-    if params[:role_id] == Role.find_by(name: "Student").id
-      if @user = User.find_by(email: params[:email]) && @user.name == @user.password
-        @user.password = params[:password]
-        session[:user_id] = @user.id
-        erb :"user/new_student"
+    #binding.pry
+    if params[:role_id] == Role.find_by(name: "Student").id.to_s
+      if @user = User.find_by(email: params[:email])
+        if @user.authenticate(@user.name)
+          @user.password = params[:password]
+          session[:user_id] = @user.id
+          erb :"user/new_student"
+        end
       elsif User.find_by(email: params[:email])
         #add flash message saying account already created w/ this email
         redirect "/login"
