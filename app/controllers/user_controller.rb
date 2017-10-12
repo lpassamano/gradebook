@@ -10,23 +10,36 @@ class UserController < ApplicationController
   end
 
   post '/signup' do
-    #binding.pry
     if params[:role_id] == Role.find_by(name: "Student").id
-      #then check to see if there is already a student with that email enrolled in any classes
       if @user = User.find_by(email: params[:email]) && @user.name == @user.password
         @user.password = params[:password]
+        session[:user_id] = @user.id
         erb :"user/new_student"
-        #to page showing courses they are enrolled in, form w/ checks so they can choose to drop classes
+      elsif User.find_by(email: params[:email])
+        #add flash message saying account already created w/ this email
+        redirect "/login"
+      else
+        user = User.new(params)
+        if user.save && params[:name] != "" && params[:email] != ""
+          session[:user_id] = user.id
+          erb :"user/new_student"
+        else
+            #add flash error message later
+          redirect "/signup"
+        end
       end
+    elsif User.find_by(email: params[:email])
+        #add flash message saying account already created w/ this email
+      redirect "/login"
     else
       user = User.new(params)
-    end
-    if user.save && params[:name] != "" && params[:email] != ""
-      session[:user_id] = user.id
-      redirect "/courses"
-    else
-      #add flash error message later
-      redirect "/signup"
+      if user.save && params[:name] != "" && params[:email] != ""
+        session[:user_id] = user.id
+        redirect "/courses"
+      else
+          #add flash error message later
+        redirect "/signup"
+      end
     end
   end
 
