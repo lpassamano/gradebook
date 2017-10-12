@@ -149,17 +149,7 @@ class CoursesController < ApplicationController
 
   post '/courses/:slug/grades' do
     course = Course.find_by_slug(params[:slug])
-    #params returns hash:
-    #  {grade_ids: {
-    #      1: {
-    #        score: xx, comment: xx
-    #      },
-    #      2: {
-    #        score: xx, comment: xx
-    #      }
-    #    }
-    #  }
-    params[:grade_ids].each do |key, value| #key is grade.id value is hash with grade.score and grade.comment
+    params[:grade_ids].each do |key, value|
       grade = Grade.find(key.to_i)
       grade.update(value)
     end
