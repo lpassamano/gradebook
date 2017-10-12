@@ -101,17 +101,20 @@ class CoursesController < ApplicationController
     course.update(params[:course])
     params[:users].collect do |user|
       if user[:name] != "" && user[:email] != ""
-        if u = User.find_by(email: user[:email]) && u.student?
-          u.courses << course
-          course.assessments.each do |assessment|
-            grade = Grade.create
-            u.grades << grade
-            assessment.grades << grade
+        if u = User.find_by(email: user[:email])
+          course.users << u
+          if u.student?
+            course.assessments.each do |assessment|
+              grade = Grade.create
+              u.grades << grade
+              assessment.grades << grade
+            end
           end
         else u = User.new(user)
           u.password = u.name
+          u.role = Role.find_by(name: "Student")
           u.save
-          u.courses << course
+          course.users << u
           course.assessments.each do |assessment|
             grade = Grade.create
             u.grades << grade
