@@ -11,3 +11,7 @@
 <% if current_user.instructor? %>
   <a href="/courses/new">Add New Course</a>
 <% end %>
+
+<% if current_user.student? %>
+  <a href="/courses/register">Update Course Registration</a>
+<% end %>
