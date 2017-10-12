@@ -122,10 +122,12 @@ class CoursesController < ApplicationController
     course.users.each do |user|
       if user.student?
         user.grades.each do |grade|
+          grade.delete if removed_assmnts.include?(grade.assessment_id)
           #delete grade if its assessment_id is in removed_assmnts
         end
       end
     end
+    binding.pry 
     redirect "/courses/#{course.slug}"
   end
 
