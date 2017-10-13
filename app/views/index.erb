@@ -1,4 +1,11 @@
 <h3>Welcome!</h3>
+
+<% if flash.has?(:message) %>
+  <p>
+    <%= flash[:message] %>
+  </p>
+<% end %>
+
 <p>
   <a href="/login">Login</a><br />
   <a href="/signup">Signup</a>
