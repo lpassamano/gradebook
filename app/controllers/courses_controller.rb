@@ -18,9 +18,7 @@ class CoursesController < ApplicationController
 
   post '/courses' do
     course = Course.create(params[:course])
-    find_or_create_student_users(params[:users], course)
-    create_assessments(params[:assessments], course)
-    create_grades(course)
+    populate_course(params, course)
     redirect "/courses/#{course.slug}"
   end
 
@@ -77,15 +75,9 @@ class CoursesController < ApplicationController
         params[:course][:assessment_ids].exclude?(id.to_s)
       end
     end
-    course.update(params[:course])
-    find_or_create_student_users(params[:users], course)
-    create_assessments(params[:assessments], course)
-    create_grades(course)
-    #can this be moved to the end of everything now since grades can't be duped?
-    #course.assessments.each do |assessment|
-    #  create_grades(assessment, course)
-    #end
 
+    course.update(params[:course])
+    populate_course(params, course)
 
     course.users.each do |user|
       if user.student?
@@ -136,6 +128,12 @@ class CoursesController < ApplicationController
   end
 
   helpers do
+    def populate_course(params, course)
+      find_or_create_student_users(params[:users], course)
+      create_assessments(params[:assessments], course)
+      create_grades(course)
+    end
+
     def find_or_create_student_users(users, course)
       users.each do |user|
         if user[:name] != "" && user[:email] != ""
