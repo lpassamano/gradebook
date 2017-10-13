@@ -4,7 +4,7 @@
   <table>
     <thead>
       <tr>
-        <th>
+        <th class="student_column">
           Students
         </th>
         <% @course.assessments.each do |assessment| %>
@@ -20,7 +20,7 @@
       <% @course.users.each do |user| %>
         <% if user.student? %>
           <tr>
-            <td>
+            <td class="student_column">
               <%= user.name %>
             </td>
               <% user.grades.each do |grade| %>
@@ -28,7 +28,12 @@
                   <td>
                     <input type="number" name="grade_ids[<%= grade.id %>][score]" value="<%= grade.score %>"/><br />
                     <!-- make this so it shows comment if there is one -->
-                    <input type="text" name="grade_ids[<%= grade.id %>][comment]" placeholder="<%= grade.comment %>" />
+                    <input type="text" name="grade_ids[<%= grade.id %>][comment]"
+                    <% if grade.comment != "" %>
+                      value="<%= grade.comment %>"
+                    <% else %>
+                      placeholder="Comment"
+                    <% end %>/>
                   </td>
                 <% end %>
               <% end %>
