@@ -13,6 +13,7 @@ gem 'sinatra-activerecord', :require => 'sinatra/activerecord'
 gem 'require_all'
 gem 'shotgun'
 gem 'bcrypt'
+gem 'rack-flash3'
 
 group :test do
   gem 'rspec'

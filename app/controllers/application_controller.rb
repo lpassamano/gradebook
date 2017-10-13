@@ -1,4 +1,5 @@
 class ApplicationController < Sinatra::Base
+  use Rack::Flash 
 
   configure do
     set :public_folder, 'public'
@@ -9,7 +10,7 @@ class ApplicationController < Sinatra::Base
 
   get '/' do
     if !logged_in?
-      create_roles 
+      create_roles
       erb :index
     else
       redirect "/courses"
