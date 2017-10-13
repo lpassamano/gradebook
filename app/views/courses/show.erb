@@ -27,6 +27,11 @@
           <td class="first_column">
             <%= user.name %>
           </td>
+            <% if @course.assessments == [] %>
+              <td>
+                
+              </td>
+            <% end %>
             <% user.grades.each do |grade| %>
               <% if @course.assessment_ids.include?(grade.assessment_id) %>
                 <td>
