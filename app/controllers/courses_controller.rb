@@ -113,12 +113,10 @@ class CoursesController < ApplicationController
         if user[:name] != "" && user[:email] != ""
           if u = User.find_by(email: user[:email])
             course.users << u if u.student?
-            binding.pry
           else u = User.new(user)
             u.password = u.name
             u.save
             course.users << u
-            binding.pry
           end
         end
       end
