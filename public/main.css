@@ -1,11 +1,21 @@
-/* set default column width for all tables *?
+/*/// LAYOUT ///*/
+body {
+  background-color: #ebedef;
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 100%;
+}
 
-/* have table cells wrap text if it is wider than column */
-
+/*/// TABLES ///*/
 table {
   border: 1px solid black;
   border-collapse: collapse;
   table-layout: fixed;
+  background-color: white;
+}
+
+th {
+  background-color: #990000;
+  color: white;
 }
 
 th, td {
@@ -23,4 +33,9 @@ th.first_column, td.first_column {
 
 td.first_column {
   text-align: left;
+  background-color: #fdedec;
+}
+
+th.comments, td.comments {
+  width: 300px;
 }

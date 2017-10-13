@@ -10,7 +10,7 @@
       <th>
         Grade
       </th>
-      <th>
+      <th class="comments">
         Comments
       </th>
     </tr>
@@ -24,7 +24,7 @@
         <td>
           <%= current_user.grades.find {|grade| grade.assessment == assessment}.score %>
         </td>
-        <td>
+        <td class="comments">
           <%= current_user.grades.find {|grade| grade.assessment == assessment}.comment %>
         </td>
       </tr>
