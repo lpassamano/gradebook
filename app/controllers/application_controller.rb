@@ -31,7 +31,7 @@ class ApplicationController < Sinatra::Base
     end
 
     def student_id
-      @student_id ||= Role.find_by(name: "Student")
+      @student_id ||= Role.find_or_create_by(name: "Student").id
     end
   end
 end
