@@ -9,4 +9,8 @@ To do:
 
 4. fix tests to all pass
 
-5. add creation of roles to environment file and change it to find_by name for all role id methods 
+5. add creation of roles to environment file and change it to find_by name for all role id methods
+
+
+Role.student_id
+Role.instructor_id 

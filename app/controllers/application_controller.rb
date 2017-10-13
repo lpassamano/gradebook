@@ -23,5 +23,9 @@ class ApplicationController < Sinatra::Base
     def current_user
       @current_user ||= User.find(session[:user_id]) if session[:user_id].present?
     end
+
+    def student_id
+      @student_id ||= Role.find_by(name: "Student")
+    end
   end
 end

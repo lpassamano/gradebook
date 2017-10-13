@@ -27,7 +27,7 @@
       <li>
         <input type="text" name="users[][name]" placeholder="Student Name" />
         <input type="text" name="users[][email]" placeholder="Student Email" />
-        <input type="hidden" id="hidden" name="users[][role_id]" value="<%= Role.find_or_create_by(name: "Student").id %>" />
+        <input type="hidden" id="hidden" name="users[][role_id]" value="<%= student_id %>" />
       </li>
     <% end %>
   </ol>
