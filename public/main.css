@@ -5,6 +5,8 @@ body {
   font-size: 100%;
 }
 
+/*/// NAVIGATION ///*/
+
 /*/// TABLES ///*/
 table {
   border: 1px solid black;
@@ -39,3 +41,7 @@ td.first_column {
 th.comments, td.comments {
   width: 300px;
 }
+
+/*/// LINKS ///*/
+
+/*/// FORMS ///*/
