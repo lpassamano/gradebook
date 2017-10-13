@@ -4,12 +4,23 @@
 
 table {
   border: 1px solid black;
+  border-collapse: collapse;
+  table-layout: fixed;
 }
 
-h1 {
-  color: red;
+th, td {
+  border: 1px solid black;
+  width: 75px;
+  padding: 5px 10px; 
+  text-align: center;
+  vertical-align: center;
 }
 
-h3 {
-  color: green; 
+th.student_column, td.student_column {
+  border: 1px solid black;
+  white-space: nowrap;
+}
+
+td.student_column {
+  text-align: left;
 }
