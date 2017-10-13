@@ -173,7 +173,6 @@ class CoursesController < ApplicationController
   end
 
   delete '/courses/:slug/delete' do
-    #make sure this redirects to /courses if you aren't allowed to delete courses
     @course = Course.find_by_slug(params[:slug])
     if !logged_in?
       redirect "/"

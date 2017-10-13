@@ -35,14 +35,7 @@ class UserController < ApplicationController
         #add flash message saying account already created w/ this email
       redirect "/login"
     else
-      user = User.new(params)
-      if user.save && params[:name] != "" && params[:email] != ""
-        session[:user_id] = user.id
-        redirect "/courses"
-      else
-          #add flash error message later
-        redirect "/signup"
-      end
+      create_new_user_or_redirect_signup(params)
     end
   end
 
@@ -55,7 +48,6 @@ class UserController < ApplicationController
   end
 
   post '/login' do
-    #binding.pry
     user = User.find_by(email: params[:email])
     if user && user.authenticate(params[:password])
       session[:user_id] = user.id
@@ -69,5 +61,18 @@ class UserController < ApplicationController
   get '/logout' do
     session.clear if logged_in?
     redirect "/"
+  end
+
+  helpers do
+    def create_new_user_or_redirect_signup(params)
+      user = User.new(params)
+      if user.save && params[:name] != "" && params[:email] != ""
+        session[:user_id] = user.id
+        redirect "/courses"
+      else
+          #add flash error message later
+        redirect "/signup"
+      end
+    end
   end
 end
