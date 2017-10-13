@@ -75,10 +75,8 @@ class CoursesController < ApplicationController
         params[:course][:assessment_ids].exclude?(id.to_s)
       end
     end
-
     course.update(params[:course])
     populate_course(params, course)
-
     course.users.each do |user|
       if user.student?
         user.grades.each do |grade|
@@ -94,12 +92,13 @@ class CoursesController < ApplicationController
     if !logged_in?
       redirect "/"
     elsif current_user.instructor? && current_user.courses.include?(@course)
-      @course.assessments.sort_by {|assessment| assessment[:id]}
-      @course.users.each do |user|
-        if user.student?
-          user.grades.sort_by {|grade| grade[:assessment_id]}
-        end
-      end
+      sort_assessments_and_grades(@course)
+      #@course.assessments.sort_by {|assessment| assessment[:id]}
+      #@course.users.each do |user|
+      #  if user.student?
+      #    user.grades.sort_by {|grade| grade[:assessment_id]}
+      #  end
+      #end
       erb :"courses/grades"
     else
       redirect "/courses"
@@ -165,6 +164,15 @@ class CoursesController < ApplicationController
             user.grades << grade
             assessment.grades << grade
           end
+        end
+      end
+    end
+
+    def sort_assessments_and_grades(course)
+      course.assessments.sort by {|assessment| assessment.id}
+      course.users.each do |user|
+        if user.student?
+          user.grades.sort_by {|grade| grade.assessment_id}
         end
       end
     end

@@ -9,6 +9,7 @@ class ApplicationController < Sinatra::Base
 
   get '/' do
     if !logged_in?
+      create_roles 
       erb :index
     else
       redirect "/courses"
@@ -18,6 +19,11 @@ class ApplicationController < Sinatra::Base
   helpers do
     def logged_in?
       !!session[:user_id]
+    end
+
+    def create_roles
+      Role.find_or_create_by(name: "Instructor")
+      Role.find_or_create_by(name: "Student")
     end
 
     def current_user
