@@ -29,5 +29,12 @@
         </td>
       </tr>
     <% end %>
+    <% if @course.assessments == [] %>
+      <tr>
+        <td colspan="3">
+          <em>No assessments added for this course.</em>
+        </td>
+      </tr>
+    <% end %>
   </tbody>
 </table>
