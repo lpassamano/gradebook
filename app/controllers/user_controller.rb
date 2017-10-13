@@ -12,7 +12,7 @@ class UserController < ApplicationController
   post '/signup' do
     if user = User.find_by(email: params[:email])
       if user.student? && user.authenticate(user.name)
-        #if password == name that means that the student was created in the create/edit course page and has not created an account yet
+        #if password == name then student was created in the new/edit course form and does not have an account
         user.password = params[:password]
         session[:user_id] = user.id
         redirect "/courses"
@@ -54,9 +54,5 @@ class UserController < ApplicationController
   get '/logout' do
     session.clear if logged_in?
     redirect "/"
-  end
-
-  helpers do
-    
   end
 end
