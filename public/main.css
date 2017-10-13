@@ -1,3 +1,15 @@
 /* set default column width for all tables *?
 
 /* have table cells wrap text if it is wider than column */
+
+table {
+  border: 1px solid black;
+}
+
+h1 {
+  color: red;
+}
+
+h3 {
+  color: green; 
+}
