@@ -21,15 +21,14 @@ class CoursesController < ApplicationController
     params[:users].collect do |user|
       if user[:name] != "" && user[:email] != ""
         if u = User.find_by(email: user[:email])
-          u.courses << course unless u.instructor?
+          course.users << u if u.student?
         else u = User.new(user)
           u.password = u.name
           u.save
-          u.courses << course
+          course.users << u
         end
       end
     end
-    #grades not being created for new assessments 
     params[:assessments].each do |assessment|
       if assessment[:name] != ""
         a = Assessment.create(assessment)
