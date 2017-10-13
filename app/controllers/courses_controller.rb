@@ -20,6 +20,7 @@ class CoursesController < ApplicationController
     course = Course.create(params[:course])
     find_or_create_student_users(params[:users], course)
     create_assessments(params[:assessments], course)
+    create_grades(course)
     redirect "/courses/#{course.slug}"
   end
 
@@ -79,6 +80,7 @@ class CoursesController < ApplicationController
     course.update(params[:course])
     find_or_create_student_users(params[:users], course)
     create_assessments(params[:assessments], course)
+    create_grades(course)
     #can this be moved to the end of everything now since grades can't be duped?
     #course.assessments.each do |assessment|
     #  create_grades(assessment, course)
@@ -146,7 +148,6 @@ class CoursesController < ApplicationController
           end
         end
       end
-      create_grades(course)
     end
 
     def create_assessments(assessments, course)
@@ -156,7 +157,6 @@ class CoursesController < ApplicationController
           course.assessments << a
         end
       end
-      create_grades(course)
     end
 
     def create_grades(course)
