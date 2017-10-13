@@ -40,12 +40,7 @@ class CoursesController < ApplicationController
     redirect '/' if !logged_in?
     @course = Course.find_by_slug(params[:slug])
     if current_user.instructor? && current_user.courses.include?(@course)
-      @course.assessments.sort_by {|assessment| assessment[:id]}
-      @course.users.each do |user|
-        if user.student?
-          user.grades.sort_by {|grade| grade[:assessment_id]}
-        end
-      end
+      sort_assessments_and_grades(@course)
       erb :"courses/show"
     elsif current_user.student? && current_user.courses.include?(@course)
       erb :"courses/show_student_user"
@@ -93,12 +88,6 @@ class CoursesController < ApplicationController
       redirect "/"
     elsif current_user.instructor? && current_user.courses.include?(@course)
       sort_assessments_and_grades(@course)
-      #@course.assessments.sort_by {|assessment| assessment[:id]}
-      #@course.users.each do |user|
-      #  if user.student?
-      #    user.grades.sort_by {|grade| grade[:assessment_id]}
-      #  end
-      #end
       erb :"courses/grades"
     else
       redirect "/courses"
@@ -169,7 +158,7 @@ class CoursesController < ApplicationController
     end
 
     def sort_assessments_and_grades(course)
-      course.assessments.sort by {|assessment| assessment.id}
+      course.assessments.sort_by {|assessment| assessment.id}
       course.users.each do |user|
         if user.student?
           user.grades.sort_by {|grade| grade.assessment_id}
