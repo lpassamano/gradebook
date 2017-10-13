@@ -23,10 +23,12 @@
             <%= user.name %>
           </td>
             <% user.grades.each do |grade| %>
-          <td>
-            <%= grade.score %>
-          </td>
-        <% end %>
+              <% if @course.assessment_ids.include?(grade.assessment_id) %>
+                <td>
+                  <%= grade.score %>
+                </td>
+             <% end %>
+          <% end %>
       <% end %>
     </tr>
     <% end %>
