@@ -24,9 +24,7 @@ class UserController < ApplicationController
         redirect "/login"
       end
     else
-      #binding.pry
       user = User.new(params)
-      # user must have selected a role or they get redirected
       if !!params[:role_id] && user.save && params[:name] != "" && params[:email] != ""
         session[:user_id] = user.id
         redirect "/courses"
