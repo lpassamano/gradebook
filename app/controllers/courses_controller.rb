@@ -78,13 +78,13 @@ class CoursesController < ApplicationController
     end
     course.update(params[:course])
     find_or_create_student_users(params[:users], course)
-
-    #can this be moved to the end of everything now since grades can't be duped? 
-    course.assessments.each do |assessment|
-      create_grades(assessment, course)
-    end
-
     create_assessments(params[:assessments], course)
+    #can this be moved to the end of everything now since grades can't be duped?
+    #course.assessments.each do |assessment|
+    #  create_grades(assessment, course)
+    #end
+
+
     course.users.each do |user|
       if user.student?
         user.grades.each do |grade|
@@ -146,6 +146,7 @@ class CoursesController < ApplicationController
           end
         end
       end
+      create_grades(course)
     end
 
     def create_assessments(assessments, course)
@@ -153,17 +154,19 @@ class CoursesController < ApplicationController
         if assessment[:name] != ""
           a = Assessment.create(assessment)
           course.assessments << a
-          create_grades(a, course)
         end
       end
+      create_grades(course)
     end
 
-    def create_grades(assessment, course)
-      course.users.each do |user|
-        if user.student? && user.assessment_ids.exclude?(assessment.id)
-          grade = Grade.create
-          user.grades << grade
-          assessment.grades << grade
+    def create_grades(course)
+      course.assessments.each do |assessment|
+        course.users.each do |user|
+          if user.student? && user.assessment_ids.exclude?(assessment.id)
+            grade = Grade.create
+            user.grades << grade
+            assessment.grades << grade
+          end
         end
       end
     end
