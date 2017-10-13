@@ -73,22 +73,17 @@ class CoursesController < ApplicationController
       removed_assmnts = course.assessment_ids
     else
       removed_assmnts = course.assessment_ids.find_all do |id|
-        !params[:course][:assessment_ids].include?(id.to_s)
+        params[:course][:assessment_ids].exclude?(id.to_s)
       end
     end
     course.update(params[:course])
     find_or_create_student_users(params[:users], course)
-    #can this #each statement be refactored into a helper method?
-    #method is part of create_assessment method - remove and make own method!
-    course.users.each do |user|
-      if user.student?
-        course.assessments.each do |assessment|
-          grade = Grade.create
-          user.grade << grade
-          assessment.grades << grade
-        end
-      end
+
+    #can this be moved to the end of everything now since grades can't be duped? 
+    course.assessments.each do |assessment|
+      create_grades(assessment, course)
     end
+
     create_assessments(params[:assessments], course)
     course.users.each do |user|
       if user.student?
@@ -158,13 +153,17 @@ class CoursesController < ApplicationController
         if assessment[:name] != ""
           a = Assessment.create(assessment)
           course.assessments << a
-          course.users.each do |user|
-            if user.student?
-              grade = Grade.create
-              user.grades << grade
-              a.grades << grade
-            end
-          end
+          create_grades(a, course)
+        end
+      end
+    end
+
+    def create_grades(assessment, course)
+      course.users.each do |user|
+        if user.student? && user.assessment_ids.exclude?(assessment.id)
+          grade = Grade.create
+          user.grades << grade
+          assessment.grades << grade
         end
       end
     end
