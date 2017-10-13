@@ -24,13 +24,14 @@ class UserController < ApplicationController
         redirect "/login"
       end
     else
+      #binding.pry
       user = User.new(params)
       # user must have selected a role or they get redirected
-      if user.save && params[:name] != "" && params[:email] != ""
+      if !!params[:role_id] && user.save && params[:name] != "" && params[:email] != ""
         session[:user_id] = user.id
         redirect "/courses"
       else
-        flash[:message] = "Please enter name, email, and password to signup for Gradebook."
+        flash[:message] = "Please enter name, email, password, and account type to signup for Gradebook."
         redirect "/signup"
       end
     end
