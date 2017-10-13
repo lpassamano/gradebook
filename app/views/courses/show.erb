@@ -13,6 +13,11 @@
         <!--</a> are links to individual assessment pages necessary? -->
       </th>
       <% end %>
+      <% if @course.assessments == [] %>
+        <th class="no_wrap">
+          <em>No Assessments have been added.</em>
+        </th>
+      <% end %>
     </tr>
   </thead>
   <tbody>
@@ -30,7 +35,14 @@
              <% end %>
           <% end %>
       <% end %>
-    </tr>
+      </tr>
+    <% end %>
+    <% if @course.users.count == 1 %>
+      <tr>
+        <td colspan="<%= @course.assessments.count + 2 %>">
+          <em>No Students have been added.</em>
+        </td>
+      </tr>
     <% end %>
   </tbody>
 </table>

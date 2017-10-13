@@ -60,6 +60,10 @@ th.comments, td.comments {
   width: 300px;
 }
 
+.no_wrap {
+  white-space: nowrap;
+}
+
 /*/// LINKS ///*/
 a {
   text-decoration: none;
