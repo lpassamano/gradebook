@@ -61,25 +61,10 @@ class CoursesController < ApplicationController
   end
 
   post '/courses/:slug' do
-    #simplify this when refactoring
     course = Course.find_by_slug(params[:slug])
-    removed_assmnts = removed_assessments(params[:course], course)
-    #if params[:course][:assessment_ids] == nil
-    #  removed_assmnts = course.assessment_ids
-    #else
-    #  removed_assmnts = course.assessment_ids.find_all do |id|
-    #    params[:course][:assessment_ids].exclude?(id.to_s)
-    #  end
-    #end
+    delete_removed_assessments_grades(params[:course], course)
     course.update(params[:course])
     populate_course(params, course)
-    #course.users.each do |user|
-    #  if user.student?
-    #    user.grades.each do |grade|
-    #      grade.delete if removed_assmnts.include?(grade.assessment_id)
-    #    end
-    #  end
-    #end
     redirect "/courses/#{course.slug}"
   end
 
@@ -163,6 +148,16 @@ class CoursesController < ApplicationController
       course.users.each do |user|
         if user.student?
           user.grades.sort_by {|grade| grade.assessment_id}
+        end
+      end
+    end
+
+    def delete_removed_assessments_grades(assessments, course)
+      course.users.each do |user|
+        if user.student?
+          user.grades.each do |grade|
+            grade.delete if removed_assessments(assessments, course).include?(grade.assessment_id)
+          end
         end
       end
     end
