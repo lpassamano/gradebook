@@ -8,3 +8,16 @@ To do:
 3. format table better in instructor view of course
 
 4. fix tests to all pass
+
+
+params[:users].collect do |user|
+  if user[:name] != "" && user[:email] != ""
+    if u = User.find_by(email: user[:email])
+      course.users << u if u.student?
+    else u = User.new(user)
+      u.password = u.name
+      u.save
+      course.users << u
+    end
+  end
+end

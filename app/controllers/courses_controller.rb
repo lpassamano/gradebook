@@ -18,17 +18,7 @@ class CoursesController < ApplicationController
 
   post '/courses' do
     course = Course.create(params[:course])
-    params[:users].collect do |user|
-      if user[:name] != "" && user[:email] != ""
-        if u = User.find_by(email: user[:email])
-          course.users << u if u.student?
-        else u = User.new(user)
-          u.password = u.name
-          u.save
-          course.users << u
-        end
-      end
-    end
+    find_or_create_student_users(params[:users], course)
     params[:assessments].each do |assessment|
       if assessment[:name] != ""
         a = Assessment.create(assessment)
@@ -99,30 +89,15 @@ class CoursesController < ApplicationController
       end
     end
     course.update(params[:course])
-    params[:users].collect do |user|
-      if user[:name] != "" && user[:email] != ""
-        if u = User.find_by(email: user[:email])
-          course.users << u
-          if u.student?
-            course.assessments.each do |assessment|
-              grade = Grade.create
-              u.grades << grade
-              assessment.grades << grade
-            end
-          end
-        else u = User.new(user)
-          u.password = u.name
-          u.role = Role.find_by(name: "Student")
-          u.save
-          course.users << u
-          course.assessments.each do |assessment|
-            grade = Grade.create
-            u.grades << grade
-            assessment.grades << grade
-          end
-        end
-      end
-    end
+    find_or_create_student_users(params[:users], course)
+    #try to move this if statement elsewhere
+    #if u.student?
+    #  course.assessments.each do |assessment|
+    #    grade = Grade.create
+    #    u.grades << grade
+    #    assessment.grades << grade
+    #  end
+    #end
     params[:assessments].each do |assessment|
       if assessment[:name] != ""
         a = Assessment.create(assessment)
@@ -181,6 +156,22 @@ class CoursesController < ApplicationController
       erb :"courses/delete"
     else
       redirect "/courses"
+    end
+  end
+
+  helpers do
+    def find_or_create_student_users(users, course)
+      users.each do |user|
+        if user[:name] != "" && user[:email] != ""
+          if u = User.find_by(email: user[:email])
+            course.users << u if u.student?
+          else u = User.new(user)
+            u.password = u.name
+            u.save
+            course.users << u
+          end
+        end
+      end
     end
   end
 end
