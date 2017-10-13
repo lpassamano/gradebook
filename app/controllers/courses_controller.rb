@@ -29,6 +29,7 @@ class CoursesController < ApplicationController
         end
       end
     end
+    #grades not being created for new assessments 
     params[:assessments].each do |assessment|
       if assessment[:name] != ""
         a = Assessment.create(assessment)

@@ -10,26 +10,19 @@ class UserController < ApplicationController
   end
 
   post '/signup' do
-    #binding.pry
     if params[:role_id] == Role.find_by(name: "Student").id.to_s
       if @user = User.find_by(email: params[:email])
+        #if email exists in db, but account has not been created if password == name
         if @user.authenticate(@user.name)
           @user.password = params[:password]
           session[:user_id] = @user.id
           redirect "/courses"
-        end
-      elsif User.find_by(email: params[:email])
-        #add flash message saying account already created w/ this email
-        redirect "/login"
-      else
-        user = User.new(params)
-        if user.save && params[:name] != "" && params[:email] != ""
-          session[:user_id] = user.id
-          redirect "/courses"
         else
-            #add flash error message later
-          redirect "/signup"
+          #add flash message saying account already created w/ this email
+          redirect "/login"
         end
+      else
+        create_new_user_or_redirect_signup(params)
       end
     elsif User.find_by(email: params[:email])
         #add flash message saying account already created w/ this email
