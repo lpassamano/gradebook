@@ -8,4 +8,7 @@ ActiveRecord::Base.establish_connection(
   :database => "db/development.sqlite"
 )
 
+Role.create(name: "Instructor")
+Role.create(name: "Student")
+
 require_all 'app'
