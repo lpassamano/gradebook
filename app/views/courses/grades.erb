@@ -4,7 +4,7 @@
   <table>
     <thead>
       <tr>
-        <th class="student_column">
+        <th class="first_column">
           Students
         </th>
         <% @course.assessments.each do |assessment| %>
@@ -20,7 +20,7 @@
       <% @course.users.each do |user| %>
         <% if user.student? %>
           <tr>
-            <td class="student_column">
+            <td class="first_column">
               <%= user.name %>
             </td>
               <% user.grades.each do |grade| %>

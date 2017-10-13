@@ -11,16 +11,16 @@ table {
 th, td {
   border: 1px solid black;
   width: 75px;
-  padding: 5px 10px; 
+  padding: 5px 10px;
   text-align: center;
   vertical-align: center;
 }
 
-th.student_column, td.student_column {
+th.first_column, td.first_column {
   border: 1px solid black;
   white-space: nowrap;
 }
 
-td.student_column {
+td.first_column {
   text-align: left;
 }
