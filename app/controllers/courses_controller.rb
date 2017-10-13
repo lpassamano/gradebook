@@ -19,19 +19,7 @@ class CoursesController < ApplicationController
   post '/courses' do
     course = Course.create(params[:course])
     find_or_create_student_users(params[:users], course)
-    params[:assessments].each do |assessment|
-      if assessment[:name] != ""
-        a = Assessment.create(assessment)
-        course.assessments << a
-        course.users.each do |user|
-          if user.student?
-            grade = Grade.create
-            user.grades << grade
-            a.grades << grade
-          end
-        end
-      end
-    end
+    create_assessments(params[:assessments], course)
     redirect "/courses/#{course.slug}"
   end
 
@@ -90,27 +78,18 @@ class CoursesController < ApplicationController
     end
     course.update(params[:course])
     find_or_create_student_users(params[:users], course)
-    #try to move this if statement elsewhere
-    #if u.student?
-    #  course.assessments.each do |assessment|
-    #    grade = Grade.create
-    #    u.grades << grade
-    #    assessment.grades << grade
-    #  end
-    #end
-    params[:assessments].each do |assessment|
-      if assessment[:name] != ""
-        a = Assessment.create(assessment)
-        course.assessments << a
-        course.users.each do |user|
-          if user.student?
-            grade = Grade.create
-            user.grades << grade
-            a.grades << grade
-          end
+    #can this #each statement be refactored into a helper method?
+    #method is part of create_assessment method - remove and make own method!
+    course.users.each do |user|
+      if user.student?
+        course.assessments.each do |assessment|
+          grade = Grade.create
+          user.grade << grade
+          assessment.grades << grade
         end
       end
     end
+    create_assessments(params[:assessments], course)
     course.users.each do |user|
       if user.student?
         user.grades.each do |grade|
@@ -169,6 +148,22 @@ class CoursesController < ApplicationController
             u.password = u.name
             u.save
             course.users << u
+          end
+        end
+      end
+    end
+
+    def create_assessments(assessments, course)
+      assessments.each do |assessment|
+        if assessment[:name] != ""
+          a = Assessment.create(assessment)
+          course.assessments << a
+          course.users.each do |user|
+            if user.student?
+              grade = Grade.create
+              user.grades << grade
+              a.grades << grade
+            end
           end
         end
       end

@@ -10,14 +10,16 @@ To do:
 4. fix tests to all pass
 
 
-params[:users].collect do |user|
-  if user[:name] != "" && user[:email] != ""
-    if u = User.find_by(email: user[:email])
-      course.users << u if u.student?
-    else u = User.new(user)
-      u.password = u.name
-      u.save
-      course.users << u
+params[:assessments].each do |assessment|
+  if assessment[:name] != ""
+    a = Assessment.create(assessment)
+    course.assessments << a
+    course.users.each do |user|
+      if user.student?
+        grade = Grade.create
+        user.grades << grade
+        a.grades << grade
+      end
     end
   end
 end
