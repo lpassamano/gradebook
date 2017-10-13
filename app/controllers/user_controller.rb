@@ -1,4 +1,7 @@
+require 'rack-flash'
+
 class UserController < ApplicationController
+  use Rack::Flash
 
   get '/signup' do
     if logged_in?
@@ -17,7 +20,7 @@ class UserController < ApplicationController
         session[:user_id] = user.id
         redirect "/courses"
       else
-        #add flash message saying account already created w/ this email
+        flash[:message] = "Account already created with this email. Please login to access Gradebook."
         redirect "/login"
       end
     else
@@ -26,7 +29,7 @@ class UserController < ApplicationController
         session[:user_id] = user.id
         redirect "/courses"
       else
-          #add flash error message later
+        flash[:message] = "Please enter name, email, and password to signup for Gradebook."
         redirect "/signup"
       end
     end
@@ -46,8 +49,8 @@ class UserController < ApplicationController
       session[:user_id] = user.id
       redirect "/courses"
     else
-      #add flash error message later
-      redirect "/login"
+      flash[:message] = "Incorrect email and/or password. Please try to login again or signup for a new account."
+      redirect "/"
     end
   end
 
