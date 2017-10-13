@@ -9,41 +9,4 @@ To do:
 
 4. fix tests to all pass
 
-
-params[:assessments].each do |assessment|
-  if assessment[:name] != ""
-    a = Assessment.create(assessment)
-    course.assessments << a
-
-
-    course.users.each do |user|
-      if user.student?
-        grade = Grade.create
-        user.grades << grade
-        a.grades << grade
-      end
-    end
-  end
-end
-
-course.assessments.each do |a|
-  course.users.each do |user|
-    if user.student?
-      grade = Grade.create
-      user.grades << grade
-      a. grades << grade
-    end
-  end
-end
-
-
-
-course.users.each do |user|
-  if user.student?
-    course.assessments.each do |assessment|
-      grade = Grade.create
-      user.grade << grade
-      assessment.grades << grade
-    end
-  end
-end
+5. add creation of roles to environment file and change it to find_by name for all role id methods 
