@@ -27,6 +27,7 @@
       <li>
         <input type="text" name="users[][name]" placeholder="Student Name" />
         <input type="text" name="users[][email]" placeholder="Student Email" />
+        <!-- hidden input is to add role_id to new student user info -->
         <input type="hidden" id="hidden" name="users[][role_id]" value="<%= student_id %>" />
       </li>
     <% end %>

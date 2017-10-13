@@ -7,11 +7,9 @@
         Students
       </th>
       <% @course.assessments.each do |assessment| %>
-      <th>
-        <!--<a href="/courses/<%= @course.slug %>/<%= assessment.slug %>">-->
+        <th>
           <%= assessment.name %>
-        <!--</a> are links to individual assessment pages necessary? -->
-      </th>
+        </th>
       <% end %>
       <% if @course.assessments == [] %>
         <th class="no_wrap">
@@ -27,20 +25,20 @@
           <td class="first_column">
             <%= user.name %>
           </td>
-            <% if @course.assessments == [] %>
-              <td>
-                
-              </td>
-            <% end %>
-            <% user.grades.each do |grade| %>
-              <% if @course.assessment_ids.include?(grade.assessment_id) %>
+          <% if @course.assessments == [] %>
+            <td>
+              <!-- placeholder cell -->
+            </td>
+          <% end %>
+          <% user.grades.each do |grade| %>
+            <% if @course.assessment_ids.include?(grade.assessment_id) %>
                 <td>
                   <%= grade.score %>
                 </td>
-             <% end %>
+            <% end %>
           <% end %>
+        </tr>
       <% end %>
-      </tr>
     <% end %>
     <% if @course.users.count == 1 %>
       <tr>

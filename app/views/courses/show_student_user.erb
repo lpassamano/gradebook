@@ -1,5 +1,6 @@
 <h3><%= @course.name %></h3>
 <h4>Instructor: <%= @course.users.find{|user| user.instructor?}.name %></h4>
+<h4>Email: <%= @course.users.find{|user| user.instructor?}.email %></h4>
 
 <table>
   <thead>
