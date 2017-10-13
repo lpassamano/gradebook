@@ -6,6 +6,24 @@ body {
 }
 
 /*/// NAVIGATION ///*/
+nav {
+  display: block;
+  color: red;
+  text-decoration: none;
+  border-bottom: 1px solid #808080;
+}
+
+nav a {
+  text-decoration: none;
+  display: inline-block;
+  padding: 5px 15px 5px 15px;
+  margin: 0px;
+}
+
+nav a:hover {
+  background-color: #808080;
+  color: white;
+}
 
 /*/// TABLES ///*/
 table {
@@ -43,5 +61,8 @@ th.comments, td.comments {
 }
 
 /*/// LINKS ///*/
+a {
+  text-decoration: none;
+}
 
 /*/// FORMS ///*/

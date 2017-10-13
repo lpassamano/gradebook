@@ -17,9 +17,12 @@
           <a href="/logout">Logout</a>
         </nav>
       <% elsif current_user.student? %>
-        <a href="/courses">Home</a>
-        <a href="/courses/register">Course Registration</a>
-        <a href="/logout">Logout</a>
+        <nav>
+          <a href="/courses">Home</a>
+          <a href="/courses/register">Course Registration</a>
+          <a href="/logout">Logout</a>
+        </nav>
+
       <% end %>
     <% end %>
     <%= yield %>
