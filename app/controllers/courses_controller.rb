@@ -17,6 +17,7 @@ class CoursesController < ApplicationController
   end
 
   post '/courses' do
+    #when new course is created w/ no assessments there are still grades showing for students, but assessments were not created
     course = Course.create(params[:course])
     params[:users].collect do |user|
       if user[:name] != "" && user[:email] != ""
@@ -60,6 +61,7 @@ class CoursesController < ApplicationController
   end
 
   get '/courses/:slug' do
+    #only show course if user is is one of the course users
     redirect '/' if !logged_in?
     @course = Course.find_by_slug(params[:slug])
     if current_user.instructor? && current_user.courses.include?(@course)
@@ -143,7 +145,6 @@ class CoursesController < ApplicationController
         end
       end
     end
-    binding.pry
     redirect "/courses/#{course.slug}"
   end
 
@@ -174,6 +175,7 @@ class CoursesController < ApplicationController
   end
 
   delete '/courses/:slug/delete' do
+    #make sure this redirects to /courses if you aren't allowed to delete courses
     @course = Course.find_by_slug(params[:slug])
     if !logged_in?
       redirect "/"
