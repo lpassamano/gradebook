@@ -14,7 +14,7 @@ ww = User.create(name: "Diana Prince", email: "ww@themyscira.com", password: "Di
 marty = User.create(name: "Marty McFly", email: "mmcfly@college.edu", password: "Marty McFly")
 harry = User.create(name: "Harry Potter", email: "harry@hogwarts.edu", password: "Harry Potter")
 ron = User.create(name: "Ron Weasley", email: "ron@hogwarts.edu", password: "Ron Weasley")
-hermoine = User.create(name: "Hermoine Granger", email: "hermoine@hogwarts.edu", password: "Hermoine Granger")
+hermoine = User.create(name: "Hermione Granger", email: "hermione@hogwarts.edu", password: "Hermione Granger")
 student.users << [leigh, gil, obi, brian, ww, marty, harry, ron, hermoine]
 
 physics = Course.create(name: "Physics 101")
