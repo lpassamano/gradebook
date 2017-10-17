@@ -26,7 +26,7 @@
                   <td>
                     <input type="number" name="grade_ids[<%= grade.id %>][score]" value="<%= grade.score %>"/><br />
                     <input type="text" name="grade_ids[<%= grade.id %>][comment]"
-                      <% if grade.comment != "" %>
+                      <% if grade[:comment] != nil %>
                         value="<%= grade.comment %>"
                       <% else %>
                         placeholder="Comment"
