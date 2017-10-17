@@ -1,6 +1,7 @@
 what I want to be able to do:
 
 class User << ActiveRecord::Base
+  #attributes: name, email, password, role_id 
 end
 
 class Instructor << User
@@ -19,6 +20,6 @@ def Student << User
   end
 end
 
-schema would only have 1 table for users.
+schema would only have 1 table for users, with a column for role_id
 
-would this make it so users initialized using Student.new and Instructor.new would be created in the users table? 
+would this make it so users initialized using Student.new and Instructor.new would be created in the users table?
