@@ -13,19 +13,22 @@ class UserController < ApplicationController
   end
 
   post '/signup' do
+    ##
     if user = User.find_by(email: params[:email])
       if user.student? && user.authenticate(user.name)
         #if password == name then student was created in the new/edit course form and does not have an account
         user.password = params[:password]
         session[:user_id] = user.id
+        # let them know they already have an acccount and have them set new password
         redirect "/courses"
       else
         flash[:message] = "Account already created with this email. Please login to access Gradebook."
+        # don't redirect to login
         redirect "/login"
       end
     else
       user = User.new(params)
-      if !!params[:role_id] && user.save && params[:name] != "" && params[:email] != ""
+      if !!params[:role_id] && params[:name] != "" && params[:email] != "" && user.save
         session[:user_id] = user.id
         redirect "/courses"
       else
